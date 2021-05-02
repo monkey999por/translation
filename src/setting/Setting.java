@@ -9,6 +9,8 @@ import java.util.Properties;
 public class Setting {
 
 	private static Properties properties;
+	
+	private static String filePath;
 
 	private Setting() {
 	};
@@ -18,6 +20,7 @@ public class Setting {
 	 */
 	public static void load(String propPath) {
 		if (properties == null) {
+			filePath = propPath;
 			properties = new Properties();
 			try {
 				properties.load(Files.newBufferedReader(Paths.get(propPath), StandardCharsets.UTF_8));
@@ -28,6 +31,10 @@ public class Setting {
 		}
 	}
 
+	public static String getFilePath() {
+		return filePath;
+	}
+	
 	/**
 	 * プロパティ値を取得する
 	 *

@@ -1,19 +1,25 @@
+package common;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class TranslationClient {
+public class Cmd {
 	/**
+	 * @param async
 	 * @param command
 	 * @return
 	 */
-	public String runCurl(String[] command) {
+	public static String execute(boolean async, String[] command) {
 		ProcessBuilder process = new ProcessBuilder(command);
 		Process p;
 		process.redirectErrorStream(true);
-		
+
 		try {
 			p = process.start();
+			if (async) {
+				return "";
+			}
 			p.waitFor();
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));

@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="create_run_jar" name="Create Runnable Jar for Project translation">
-    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
-    <!--ANT 1.7 is required                                        -->
-    <!--define folder properties-->
-    <property name="dir.buildfile" value="."/>
-    <property name="dir.workspace" value="${dir.buildfile}/.."/>
-    <property name="dir.jarfile" value="C:/Users/nogam/Documents/my_contents/run/bin/translation"/>
-    <target name="create_run_jar">
-        <jar destfile="${dir.jarfile}/translation.jar" filesetmanifest="mergewithoutmain">
-            <manifest>
-                <attribute name="Main-Class" value="Main"/>
-                <attribute name="Class-Path" value="."/>
-            </manifest>
-            <fileset dir="${dir.buildfile}/bin"/>
-            <zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/lib/jsonic-1.2.0.jar"/>
-            <fileset dir="${dir.buildfile}/lib"/>
-            <zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/lib/langdetect.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/lib/commons-codec-1.15.jar"/>
-        </jar>
-    </target>
+<project default="create_run_jar"
+	name="Create Runnable Jar for Project translation">
+	<!--this file was created by Eclipse Runnable JAR Export Wizard -->
+	<!--ANT 1.7 is required -->
+	<!--define folder properties -->
+	<property name="dir.buildfile" value="." />
+	<property name="dir.workspace" value="${dir.buildfile}/.." />
+	<property name="dir.jarfile"
+		value="C:/Users/nogam/Documents/my_contents/run/bin/translation" />
+	<target name="create_run_jar">
+		<jar destfile="${dir.jarfile}/translation.jar"
+			filesetmanifest="mergewithoutmain">
+			<manifest>
+				<attribute name="Main-Class" value="Main" />
+				<attribute name="Class-Path" value="." />
+			</manifest>
+			<fileset dir="${dir.buildfile}/bin" />
+			<zipfileset excludes="META-INF/*.SF"
+				src="${dir.buildfile}/lib/jsonic-1.2.0.jar" />
+			<fileset dir="${dir.buildfile}/lib" />
+			<zipfileset excludes="META-INF/*.SF"
+				src="${dir.buildfile}/lib/langdetect.jar" />
+			<zipfileset excludes="META-INF/*.SF"
+				src="${dir.buildfile}/lib/commons-codec-1.15.jar" />
+		</jar>
+	</target>
 </project>
