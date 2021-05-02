@@ -4,12 +4,13 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Map;
 import java.util.Properties;
 
 public class Setting {
 
 	private static Properties properties;
-	
+
 	private static String filePath;
 
 	private Setting() {
@@ -34,7 +35,7 @@ public class Setting {
 	public static String getFilePath() {
 		return filePath;
 	}
-	
+
 	/**
 	 * プロパティ値を取得する
 	 *
@@ -43,6 +44,14 @@ public class Setting {
 	 */
 	public static String get(String key) {
 		return properties.getProperty(key, null);
+	}
+
+	public static void printAll() {
+		if (new Boolean(get("debug_mode"))) {
+			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+				System.out.println("■ [" + entry.getKey() + "] :   " + entry.getValue());
+			}
+		}
 	}
 
 }

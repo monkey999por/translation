@@ -50,11 +50,10 @@ public class Main {
 	private static void welcomePrint() {
 		System.out.println("------------------- Hello Translation -------------------");
 		System.out.println("@see: https://github.com/monkey999por/translation.git");
-		System.out.println("\"@see: https://github.com/monkey999por/translation.git");
+		System.out.println("@see: https://github.com/monkey999por/language-detection.git");
 		System.out.println();
 		System.out.println("■ Setting: " + Setting.getFilePath());
-		System.out.println("■ Lang Detecter Profile: " + Setting.get("lang_detecter_profile"));
-		System.out.println("■ Interval: " + Setting.get("loop_interval") + "ms");
+		Setting.printAll();
 		System.out.println();
 	}
 
