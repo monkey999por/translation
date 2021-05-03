@@ -4,7 +4,10 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.codec.net.URLCodec;
 
+import com.cybozu.labs.langdetect.LangDetectException;
+
 import common.Cmd;
+import common.LangDetecter;
 import setting.Setting;
 
 public class TranslationClient {
@@ -29,5 +32,13 @@ public class TranslationClient {
 	public static String request(String requestUrl) {
 		return Cmd.execute(false, new String[] { "curl", "-L", "-s", requestUrl });
 	}
+	public static String translate(String text) throws LangDetectException {
+		String requestUrl = LangDetecter.isJapanese(text)
+				? TranslationClient.createRequestUrl(text, "ja", "en")
+				: TranslationClient.createRequestUrl(text, "en", "ja");
+
+		return request(requestUrl);
+	}
+	
 	
 }

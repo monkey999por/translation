@@ -1,3 +1,4 @@
+import client.MyTextToSpeechClient;
 import client.TranslationClient;
 import common.LangDetecter;
 import common.MyClipBoard;
@@ -28,23 +29,33 @@ public class Main {
 				continue;
 			}
 
-			// 翻訳してコンソール表示　同期　日本語系か英語か
 			String ct = MyClipBoard.getText();
-			String requestUrl = LangDetecter.isJapanese(ct)
-					? TranslationClient.createRequestUrl(ct, "ja", "en")
-					: TranslationClient.createRequestUrl(ct, "en", "ja");
 
-			String result = TranslationClient.request(requestUrl);
+			// translate text
+			String result = TranslationClient.translate(ct);
+
+			// speech to text run
+			// clipbord text is English ->Clipbord text(=English) to speech 
+			// clipbord text is javanese -> Translation result(=English) to speech
+			if (LangDetecter.isJapanese(ct)) {
+				MyTextToSpeechClient.request(result);
+			} else {
+				MyTextToSpeechClient.request(ct);
+			}
 
 			//実行結果
+			// translate result to console  
 			System.out.println("---------------------------------------------------------");
 			System.out.println("■ from -> : " + ct);
 			System.out.println("■ to   -> : " + result);
 			System.out.println("");
+			// playback text to speech result
+			if (new Boolean(Setting.get("enable_google_cloud_text_to_speech"))) {
+				MyTextToSpeechClient.playback();
+			}
 
 			lastTimeClipText = ct;
 		}
-
 	}
 
 	private static void welcomePrint() {
