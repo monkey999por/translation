@@ -27,19 +27,17 @@ public class LangDetecter {
 	 * @return
 	 * @throws LangDetectException
 	 */
-	private static void init() throws LangDetectException {
+	public static void init() throws LangDetectException {
 		init(Setting.get("lang_detecter_profile"));
 	}
 
 	public static String detect(String text) throws LangDetectException {
-		init();
 		Detector detector = DetectorFactory.create();
 		detector.append(text);
 		return detector.detect();
 	}
 
 	public static ArrayList<Language> detectLangs(String text) throws LangDetectException {
-		init();
 		Detector detector = DetectorFactory.create();
 		detector.append(text);
 		return detector.getProbabilities();

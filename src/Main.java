@@ -18,6 +18,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		Setting.load(args[0]);
+		LangDetecter.init();
 		welcomePrint();
 
 		// クリップボードを監視しながらポーリング
@@ -65,6 +66,7 @@ public class Main {
 			// execute translate clipboard text
 			ExecutorService translateService = Executors.newCachedThreadPool();
 			Future<String> translationResult = translateService.submit(translation);
+			translateService.shutdown();
 
 			/*speech to text run and  playback text to speech result
 			 * clipbord text is English ->Clipbord text(=English) to speech
@@ -90,8 +92,8 @@ public class Main {
 			};
 			// execute text to speech
 			ExecutorService textToSpeechService = Executors.newCachedThreadPool();
-			//textToSpeechService.shutdownNow();
 			textToSpeechService.submit(textToSpeech);
+			textToSpeechService.shutdown();
 
 			lastTimeClipText = ct;
 		}
