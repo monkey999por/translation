@@ -1,3 +1,10 @@
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import com.cybozu.labs.langdetect.LangDetectException;
+
 import client.MyTextToSpeechClient;
 import client.TranslationClient;
 import common.LangDetecter;
@@ -11,6 +18,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		Setting.load(args[0]);
+		LangDetecter.init();
 		welcomePrint();
 
 		// クリップボードを監視しながらポーリング
@@ -29,30 +37,64 @@ public class Main {
 				continue;
 			}
 
+			/*
+			 * クリップボードのテキストから、翻訳。翻訳結果（またはコピーしたテキスト）のオーディオ再生を行う
+			 * ・フロー
+			 * ■英語をコピー⇒翻訳リクエスト(非同期)
+			 * 　　　　　　　⇒コピーしたテキスト(英語)をオーディオ再生(非同期)
+			 * 
+			 * ■日本語をコピー⇒翻訳リクエスト(非同期※)⇒
+			 * 　　　　　　　　　　　　　　　　　　　　  ⇒コピーしたテキスト(英語)をオーディオ再生(非同期)
+			 * 
+			 */
+
+			// translate clipboard text
 			String ct = MyClipBoard.getText();
+			Callable<String> translation = new Callable<String>() {
+				@Override
+				public String call() throws LangDetectException {
+					String result = TranslationClient.translate(ct);
+					// translate result to console  
+					System.out.println("---------------------------------------------------------");
+					System.out.println("■ from -> : " + ct);
+					System.out.println("■ to   -> : " + result);
+					System.out.println("");
 
-			// translate text
-			String result = TranslationClient.translate(ct);
+					return result;
+				}
+			};
+			// execute translate clipboard text
+			ExecutorService translateService = Executors.newCachedThreadPool();
+			Future<String> translationResult = translateService.submit(translation);
+			translateService.shutdown();
 
-			// speech to text run
-			// clipbord text is English ->Clipbord text(=English) to speech 
-			// clipbord text is javanese -> Translation result(=English) to speech
-			if (LangDetecter.isJapanese(ct)) {
-				MyTextToSpeechClient.request(result);
-			} else {
-				MyTextToSpeechClient.request(ct);
-			}
+			/*speech to text run and  playback text to speech result
+			 * clipbord text is English ->Clipbord text(=English) to speech
+			 * clipbord text is javanese -> Translation result(=English) to speech
+			 */
+			Runnable textToSpeech = new Runnable() {
+				@Override
+				public void run() {
+					try {
+						// text to speech request
+						MyTextToSpeechClient.request(
+								LangDetecter.isJapanese(ct) ? translationResult.get() : ct);
+						
+						//  play back text to speech result(mp3)
+						// see -> setting : "google_cloud_text_to_speech_out_audio_file"
+						if (new Boolean(Setting.get("enable_google_cloud_text_to_speech"))) {
+							MyTextToSpeechClient.playback();
+						}
 
-			//実行結果
-			// translate result to console  
-			System.out.println("---------------------------------------------------------");
-			System.out.println("■ from -> : " + ct);
-			System.out.println("■ to   -> : " + result);
-			System.out.println("");
-			// playback text to speech result
-			if (new Boolean(Setting.get("enable_google_cloud_text_to_speech"))) {
-				MyTextToSpeechClient.playback();
-			}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			};
+			// execute text to speech
+			ExecutorService textToSpeechService = Executors.newCachedThreadPool();
+			textToSpeechService.submit(textToSpeech);
+			textToSpeechService.shutdown();
 
 			lastTimeClipText = ct;
 		}
