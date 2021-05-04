@@ -1,7 +1,10 @@
+import java.io.FileNotFoundException;
+
 import client.MyTextToSpeechClient;
 import client.TranslationClient;
 import common.LangDetecter;
 import common.MyClipBoard;
+import javazoom.jl.decoder.JavaLayerException;
 import setting.Setting;
 
 public class Main {
@@ -34,6 +37,12 @@ public class Main {
 			// translate text
 			String result = TranslationClient.translate(ct);
 
+			// translate result to console  
+			System.out.println("---------------------------------------------------------");
+			System.out.println("■ from -> : " + ct);
+			System.out.println("■ to   -> : " + result);
+			System.out.println("");
+
 			// speech to text run
 			// clipbord text is English ->Clipbord text(=English) to speech 
 			// clipbord text is javanese -> Translation result(=English) to speech
@@ -43,15 +52,18 @@ public class Main {
 				MyTextToSpeechClient.request(ct);
 			}
 
-			//実行結果
-			// translate result to console  
-			System.out.println("---------------------------------------------------------");
-			System.out.println("■ from -> : " + ct);
-			System.out.println("■ to   -> : " + result);
-			System.out.println("");
 			// playback text to speech result
 			if (new Boolean(Setting.get("enable_google_cloud_text_to_speech"))) {
-				MyTextToSpeechClient.playback();
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							MyTextToSpeechClient.playback();
+						} catch (FileNotFoundException | JavaLayerException e) {
+							e.printStackTrace();
+						}
+					}
+				}).start();
 			}
 
 			lastTimeClipText = ct;
