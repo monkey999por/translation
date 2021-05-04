@@ -76,11 +76,12 @@ public class Main {
 				@Override
 				public void run() {
 					try {
-						if (LangDetecter.isJapanese(ct)) {
-							MyTextToSpeechClient.request(translationResult.get());
-						} else {
-							MyTextToSpeechClient.request(ct);
-						}
+						// text to speech request
+						MyTextToSpeechClient.request(
+								LangDetecter.isJapanese(ct) ? translationResult.get() : ct);
+						
+						//  play back text to speech result(mp3)
+						// see -> setting : "google_cloud_text_to_speech_out_audio_file"
 						if (new Boolean(Setting.get("enable_google_cloud_text_to_speech"))) {
 							MyTextToSpeechClient.playback();
 						}
