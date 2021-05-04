@@ -1,10 +1,14 @@
-import java.io.FileNotFoundException;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import com.cybozu.labs.langdetect.LangDetectException;
 
 import client.MyTextToSpeechClient;
 import client.TranslationClient;
 import common.LangDetecter;
 import common.MyClipBoard;
-import javazoom.jl.decoder.JavaLayerException;
 import setting.Setting;
 
 public class Main {
@@ -32,39 +36,62 @@ public class Main {
 				continue;
 			}
 
+			/*
+			 * クリップボードのテキストから、翻訳。翻訳結果（またはコピーしたテキスト）のオーディオ再生を行う
+			 * ・フロー
+			 * ■英語をコピー⇒翻訳リクエスト(非同期)
+			 * 　　　　　　　⇒コピーしたテキスト(英語)をオーディオ再生(非同期)
+			 * 
+			 * ■日本語をコピー⇒翻訳リクエスト(非同期※)⇒
+			 * 　　　　　　　　　　　　　　　　　　　　  ⇒コピーしたテキスト(英語)をオーディオ再生(非同期)
+			 * 
+			 */
+
+			// translate clipboard text
 			String ct = MyClipBoard.getText();
+			Callable<String> translation = new Callable<String>() {
+				@Override
+				public String call() throws LangDetectException {
+					String result = TranslationClient.translate(ct);
+					// translate result to console  
+					System.out.println("---------------------------------------------------------");
+					System.out.println("■ from -> : " + ct);
+					System.out.println("■ to   -> : " + result);
+					System.out.println("");
 
-			// translate text
-			String result = TranslationClient.translate(ct);
+					return result;
+				}
+			};
+			// execute translate clipboard text
+			ExecutorService translateService = Executors.newCachedThreadPool();
+			Future<String> translationResult = translateService.submit(translation);
 
-			// translate result to console  
-			System.out.println("---------------------------------------------------------");
-			System.out.println("■ from -> : " + ct);
-			System.out.println("■ to   -> : " + result);
-			System.out.println("");
-
-			// speech to text run
-			// clipbord text is English ->Clipbord text(=English) to speech 
-			// clipbord text is javanese -> Translation result(=English) to speech
-			if (LangDetecter.isJapanese(ct)) {
-				MyTextToSpeechClient.request(result);
-			} else {
-				MyTextToSpeechClient.request(ct);
-			}
-
-			// playback text to speech result
-			if (new Boolean(Setting.get("enable_google_cloud_text_to_speech"))) {
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							MyTextToSpeechClient.playback();
-						} catch (FileNotFoundException | JavaLayerException e) {
-							e.printStackTrace();
+			/*speech to text run and  playback text to speech result
+			 * clipbord text is English ->Clipbord text(=English) to speech
+			 * clipbord text is javanese -> Translation result(=English) to speech
+			 */
+			Runnable textToSpeech = new Runnable() {
+				@Override
+				public void run() {
+					try {
+						if (LangDetecter.isJapanese(ct)) {
+							MyTextToSpeechClient.request(translationResult.get());
+						} else {
+							MyTextToSpeechClient.request(ct);
 						}
+						if (new Boolean(Setting.get("enable_google_cloud_text_to_speech"))) {
+							MyTextToSpeechClient.playback();
+						}
+
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-				}).start();
-			}
+				}
+			};
+			// execute text to speech
+			ExecutorService textToSpeechService = Executors.newCachedThreadPool();
+			//textToSpeechService.shutdownNow();
+			textToSpeechService.submit(textToSpeech);
 
 			lastTimeClipText = ct;
 		}
