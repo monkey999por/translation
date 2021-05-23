@@ -25,7 +25,7 @@ import setting.Setting;
 public class MyTextToSpeechClient {
 	/** Demonstrates using the Text-to-Speech API. */
 	public static void request(String text) throws Exception {
-		if (!new Boolean(Setting.get("enable_google_cloud_text_to_speech"))) {
+		if (!Boolean.valueOf(Setting.get("enable_google_cloud_text_to_speech"))) {
 			return;
 		}
 		// Instantiates a client

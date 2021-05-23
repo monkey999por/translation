@@ -1,3 +1,4 @@
+import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -21,10 +22,15 @@ public class Main {
 		LangDetecter.init();
 		welcomePrint();
 
+		System.out.println("コンソールに入力した文字を翻訳します。");
+		Scanner scanner = new Scanner(System.in, "utf-8");
+
+		System.out.println(scanner.next());
 		// クリップボードを監視しながらポーリング
 		int gcCount = 0;
-		Long loopInterval = new Long(Setting.get("loop_interval"));
+		Long loopInterval = Long.valueOf(Setting.get("loop_interval"));
 
+		System.out.println("クリップボードを監視し、変更があった場合は翻訳します。");
 		while (true) {
 			if (lastTimeClipText.equals(MyClipBoard.getText())) {
 				//一定時間経過後にGCする 1800ループごと
@@ -79,11 +85,12 @@ public class Main {
 						// text to speech request
 						MyTextToSpeechClient.request(
 								LangDetecter.isJapanese(ct) ? translationResult.get() : ct);
-						
+
 						//  play back text to speech result(mp3)
 						// see -> setting : "google_cloud_text_to_speech_out_audio_file"
-						if (new Boolean(Setting.get("enable_google_cloud_text_to_speech"))) {
+						if (Boolean.valueOf(Setting.get("enable_google_cloud_text_to_speech"))) {
 							MyTextToSpeechClient.playback();
+
 						}
 
 					} catch (Exception e) {

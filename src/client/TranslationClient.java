@@ -28,10 +28,11 @@ public class TranslationClient {
 				.replace("{source}", source)
 				.replace("{target}", target);
 	}
-	
+
 	public static String request(String requestUrl) {
 		return Cmd.execute(false, new String[] { "curl", "-L", "-s", requestUrl });
 	}
+
 	public static String translate(String text) throws LangDetectException {
 		String requestUrl = LangDetecter.isJapanese(text)
 				? TranslationClient.createRequestUrl(text, "ja", "en")
@@ -39,6 +40,5 @@ public class TranslationClient {
 
 		return request(requestUrl);
 	}
-	
-	
+
 }
