@@ -4,11 +4,11 @@ import common.MyClipBoard;
 import setting.Setting;
 import worker.TranslationWorker;
 
-public class ClipBoardObserver implements Runnable{
+public class ClipBoardObserver implements Runnable {
 
 	//前回のクリップボードの内容を保持する
 	private static String lastTimeClipText = MyClipBoard.getText() == null ? "" : MyClipBoard.getText();
-		
+
 	public ClipBoardObserver() {
 	}
 
@@ -17,7 +17,7 @@ public class ClipBoardObserver implements Runnable{
 		// クリップボードを監視しながらポーリング
 		int gcCount = 0;
 		Long loopInterval = Long.valueOf(Setting.get("loop_interval"));
-		
+
 		while (true) {
 			if (lastTimeClipText.equals(MyClipBoard.getText())) {
 				//一定時間経過後にGCする 1800ループごと
@@ -29,11 +29,13 @@ public class ClipBoardObserver implements Runnable{
 				try {
 					Thread.sleep(loopInterval);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					if (Boolean.valueOf(Setting.get("debug_mode"))) {
+						e.printStackTrace();
+					}
 				}
 				continue;
 			}
-			
+
 			// translation worker run
 			String ct = MyClipBoard.getText();
 			TranslationWorker.run(ct);

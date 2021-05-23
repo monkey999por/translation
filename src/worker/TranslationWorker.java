@@ -72,7 +72,9 @@ public class TranslationWorker {
 						MyTextToSpeechClient.playback();
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					if (Boolean.valueOf(Setting.get("debug_mode"))) {
+						e.printStackTrace();
+					}
 				}
 			}
 		};

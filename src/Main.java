@@ -8,13 +8,13 @@ public class Main {
 		Setting.load(args[0]);
 		LangDetecter.init();
 		welcomePrint();
-		
+
 		// クリップボードを監視し、変更があった場合は翻訳者(TranslationWorker)を呼び出し 別スレッドで実行
 		new Thread(new ClipBoardObserver()).start();
-		
+
 		// 標準入力を監視する。入力があった場合は翻訳者(TranslationWorker)を呼び出し 別スレッドで実行
 		new Thread(new StandardInObserver()).start();
-		
+
 	}
 
 	private static void welcomePrint() {

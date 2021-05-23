@@ -12,12 +12,14 @@ public class StandardInObserver implements Runnable {
 
 	@Override
 	public void run() {
-		try(Scanner scanner = new Scanner(System.in, Setting.get("standard_in_encoding"))){
+		try (Scanner scanner = new Scanner(System.in, Setting.get("standard_in_encoding"))) {
 			while (true) {
 				TranslationWorker.run(scanner.nextLine());
 			}
-		}catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			if (Boolean.valueOf(Setting.get("debug_mode"))) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

@@ -21,7 +21,9 @@ public class TranslationClient {
 		try {
 			text = codec.encode(text, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			if (Boolean.valueOf(Setting.get("debug_mode"))) {
+				e.printStackTrace();
+			}
 		}
 		String url = Setting.get("translate_request_url");
 		return url.replace("{text}", text)

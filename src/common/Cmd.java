@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import setting.Setting;
+
 public class Cmd {
 	/**
 	 * @param async
@@ -33,7 +35,9 @@ public class Cmd {
 
 		} catch (IOException | InterruptedException e) {
 
-			e.printStackTrace();
+			if (Boolean.valueOf(Setting.get("debug_mode"))) {
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}
