@@ -2,6 +2,7 @@ package thread;
 
 import java.util.Scanner;
 
+import setting.Setting;
 import worker.TranslationWorker;
 
 public class StandardInObserver implements Runnable {
@@ -11,7 +12,7 @@ public class StandardInObserver implements Runnable {
 
 	@Override
 	public void run() {
-		try(Scanner scanner = new Scanner(System.in, "utf-8")){
+		try(Scanner scanner = new Scanner(System.in, Setting.get("standard_in_encoding"))){
 			while (true) {
 				TranslationWorker.run(scanner.nextLine());
 			}
