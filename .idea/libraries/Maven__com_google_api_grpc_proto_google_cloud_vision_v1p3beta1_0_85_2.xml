@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.google.api.grpc:proto-google-cloud-vision-v1p3beta1:0.85.2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/api/grpc/proto-google-cloud-vision-v1p3beta1/0.85.2/proto-google-cloud-vision-v1p3beta1-0.85.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/api/grpc/proto-google-cloud-vision-v1p3beta1/0.85.2/proto-google-cloud-vision-v1p3beta1-0.85.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/api/grpc/proto-google-cloud-vision-v1p3beta1/0.85.2/proto-google-cloud-vision-v1p3beta1-0.85.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
