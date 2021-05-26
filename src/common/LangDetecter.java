@@ -44,7 +44,7 @@ public class LangDetecter {
 	}
 
 	/**
-	 * @param detectResult
+	 * @param text
 	 * @return 
 	 * @throws LangDetectException 
 	 */
