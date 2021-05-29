@@ -24,3 +24,6 @@ hs_err_pid*
 
 bin/
 /target/
+
+# winmerge backup file (auto create)
+*.bak

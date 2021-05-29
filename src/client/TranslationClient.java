@@ -7,7 +7,7 @@ import org.apache.commons.codec.net.URLCodec;
 import com.cybozu.labs.langdetect.LangDetectException;
 
 import common.Cmd;
-import common.LangDetecter;
+import common.LangDetector;
 import setting.Setting;
 
 public class TranslationClient {
@@ -36,7 +36,7 @@ public class TranslationClient {
 	}
 
 	public static String translate(String text) throws LangDetectException {
-		String requestUrl = LangDetecter.isJapanese(text)
+		String requestUrl = LangDetector.isJapanese(text)
 				? TranslationClient.createRequestUrl(text, "ja", "en")
 				: TranslationClient.createRequestUrl(text, "en", "ja");
 

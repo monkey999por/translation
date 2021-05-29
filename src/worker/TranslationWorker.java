@@ -9,7 +9,7 @@ import com.cybozu.labs.langdetect.LangDetectException;
 
 import client.MyTextToSpeechClient;
 import client.TranslationClient;
-import common.LangDetecter;
+import common.LangDetector;
 import setting.Setting;
 
 /**
@@ -64,7 +64,7 @@ public class TranslationWorker {
 				try {
 					// text to speech request
 					MyTextToSpeechClient.request(
-							LangDetecter.isJapanese(translationText) ? translationResult.get() : translationText);
+							LangDetector.isJapanese(translationText) ? translationResult.get() : translationText);
 
 					//  play back text to speech result(mp3)
 					// see -> setting : "google_cloud_text_to_speech_out_audio_file"

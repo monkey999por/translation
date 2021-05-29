@@ -1,15 +1,14 @@
 package common;
 
-import java.util.ArrayList;
-
 import com.cybozu.labs.langdetect.Detector;
 import com.cybozu.labs.langdetect.DetectorFactory;
 import com.cybozu.labs.langdetect.LangDetectException;
 import com.cybozu.labs.langdetect.Language;
-
 import setting.Setting;
 
-public class LangDetecter {
+import java.util.ArrayList;
+
+public class LangDetector {
 
 	/**
 	 * 初期化されているかどうか。直接変更することは不可
@@ -28,7 +27,7 @@ public class LangDetecter {
 	 * @throws LangDetectException
 	 */
 	public static void init() throws LangDetectException {
-		init(Setting.get("lang_detecter_profile"));
+		init(Setting.get("lang_detector_profile"));
 	}
 
 	public static String detect(String text) throws LangDetectException {

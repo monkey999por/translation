@@ -1,4 +1,4 @@
-import common.LangDetecter;
+import common.LangDetector;
 import setting.Setting;
 import thread.ClipBoardObserver;
 import thread.StandardInObserver;
@@ -6,7 +6,7 @@ import thread.StandardInObserver;
 public class Main {
 	public static void main(String[] args) throws Exception {
 		Setting.load(args[0]);
-		LangDetecter.init();
+		LangDetector.init();
 		welcomePrint();
 
 		// クリップボードを監視し、変更があった場合は翻訳者(TranslationWorker)を呼び出し 別スレッドで実行
