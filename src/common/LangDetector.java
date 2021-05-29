@@ -15,7 +15,7 @@ public class LangDetector {
 	 */
 	private static boolean isInit = false;
 
-	private static void init(String profileDirectory) throws LangDetectException {
+	private static synchronized void init(String profileDirectory) throws LangDetectException {
 		if (!isInit) {
 			DetectorFactory.loadProfile(profileDirectory);
 			isInit = true;
@@ -31,12 +31,14 @@ public class LangDetector {
 	}
 
 	public static String detect(String text) throws LangDetectException {
+		init();
 		Detector detector = DetectorFactory.create();
 		detector.append(text);
 		return detector.detect();
 	}
 
 	public static ArrayList<Language> detectLangs(String text) throws LangDetectException {
+		init();
 		Detector detector = DetectorFactory.create();
 		detector.append(text);
 		return detector.getProbabilities();
@@ -48,6 +50,7 @@ public class LangDetector {
 	 * @throws LangDetectException 
 	 */
 	public static Boolean isJapanese(String text) throws LangDetectException {
+		init();
 		switch (detect(text)) {
 		case "ja":
 		case "ko":
