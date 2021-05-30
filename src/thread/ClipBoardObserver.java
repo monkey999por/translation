@@ -2,7 +2,8 @@ package thread;
 
 import common.MyClipBoard;
 import setting.Setting;
-import worker.TranslationWorker;
+import worker.TaskMediator;
+import worker.TaskType;
 
 public class ClipBoardObserver implements Runnable {
 
@@ -38,7 +39,7 @@ public class ClipBoardObserver implements Runnable {
 
 			// translation worker run
 			String ct = MyClipBoard.getText();
-			TranslationWorker.run(ct);
+			TaskMediator.order(TaskType.TRANSLATE, ct);
 			lastTimeClipText = ct;
 		}
 	}
