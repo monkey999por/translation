@@ -1,16 +1,15 @@
 package worker;
 
+import client.MyTextToSpeechClient;
+import client.TranslationClient;
+import com.cybozu.labs.langdetect.LangDetectException;
+import common.LangDetector;
+import setting.Setting;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-
-import com.cybozu.labs.langdetect.LangDetectException;
-
-import client.MyTextToSpeechClient;
-import client.TranslationClient;
-import common.LangDetector;
-import setting.Setting;
 
 /**
  * @author nogam
@@ -40,10 +39,10 @@ public class TranslationWorker {
 		Callable<String> translation = new Callable<String>() {
 			@Override
 			public String call() throws LangDetectException {
-				String result = TranslationClient.translate(translationText);
-				// translate result to console  
 				System.out.println("---------------------------------------------------------");
 				System.out.println("■ from -> : " + translationText);
+				String result = TranslationClient.translate(translationText);
+				// translate result to console
 				System.out.println("■ to   -> : " + result);
 				System.out.println();
 				return result;
