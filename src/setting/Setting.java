@@ -32,6 +32,14 @@ public class Setting {
 		}
 	}
 
+	public static void reLoad(){
+		try {
+			properties.load(Files.newBufferedReader(Paths.get(filePath), StandardCharsets.UTF_8));
+		} catch (IOException e) {
+			System.out.println(String.format("ファイルの読み込みに失敗しました。ファイル名:%s", filePath));
+		}
+	}
+
 	public static String getFilePath() {
 		return filePath;
 	}
