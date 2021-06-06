@@ -36,12 +36,12 @@ public class TranslationWorker {
 	 */
 	public static void run(String translationText) {
 		// translate clipboard text
-		Callable<String> translation = new Callable<String>() {
+		var translation = new Callable<String>() {
 			@Override
 			public String call() throws LangDetectException {
 				System.out.println("---------------------------------------------------------");
 				System.out.println("■ from -> : " + translationText);
-				String result = TranslationClient.translate(translationText);
+				var result = TranslationClient.translate(translationText);
 				// translate result to console
 				System.out.println("■ to   -> : " + result);
 				System.out.println();
@@ -49,15 +49,15 @@ public class TranslationWorker {
 			}
 		};
 		// execute translate clipboard text
-		ExecutorService translateService = Executors.newCachedThreadPool();
-		Future<String> translationResult = translateService.submit(translation);
+		var translateService = Executors.newCachedThreadPool();
+		var translationResult = translateService.submit(translation);
 		translateService.shutdown();
 
 		/*speech to text run and  playback text to speech result
 		 * clipbord text is English ->Clipbord text(=English) to speech
 		 * clipbord text is javanese -> Translation result(=English) to speech
 		 */
-		Runnable textToSpeech = new Runnable() {
+		var textToSpeech = new Runnable() {
 			@Override
 			public void run() {
 				try {
@@ -78,7 +78,7 @@ public class TranslationWorker {
 			}
 		};
 		// execute text to speech
-		ExecutorService textToSpeechService = Executors.newCachedThreadPool();
+		var textToSpeechService = Executors.newCachedThreadPool();
 		textToSpeechService.submit(textToSpeech);
 		textToSpeechService.shutdown();
 	}

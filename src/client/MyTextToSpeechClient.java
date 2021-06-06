@@ -29,30 +29,30 @@ public class MyTextToSpeechClient {
 			return;
 		}
 		// Instantiates a client
-		try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
+		try (var textToSpeechClient = TextToSpeechClient.create()) {
 			// Set the text input to be synthesized
-			SynthesisInput input = SynthesisInput.newBuilder()
+			var input = SynthesisInput.newBuilder()
 					.setText(text).build();
 
 			// Build the voice request, select the language code ("en-US") and the ssml voice gender
 			// ("neutral")
-			VoiceSelectionParams voice = VoiceSelectionParams.newBuilder()
+			var voice = VoiceSelectionParams.newBuilder()
 					.setLanguageCode("en-US")
 					.setSsmlGender(SsmlVoiceGender.NEUTRAL)
 					.build();
 
 			// Select the type of audio file you want returned
-			AudioConfig audioConfig = AudioConfig.newBuilder().setAudioEncoding(AudioEncoding.MP3).build();
+			var audioConfig = AudioConfig.newBuilder().setAudioEncoding(AudioEncoding.MP3).build();
 
 			// Perform the text-to-speech request on the text input with the selected voice parameters and
 			// audio file type
-			SynthesizeSpeechResponse response = textToSpeechClient.synthesizeSpeech(input, voice, audioConfig);
+			var response = textToSpeechClient.synthesizeSpeech(input, voice, audioConfig);
 
 			// Get the audio contents from the response
-			ByteString audioContents = response.getAudioContent();
+			var audioContents = response.getAudioContent();
 
 			// Write the response to the output file.
-			try (OutputStream out = new FileOutputStream(Setting.get("google_cloud_text_to_speech_out_audio_file"))) {
+			try (var out = new FileOutputStream(Setting.get("google_cloud_text_to_speech_out_audio_file"))) {
 				out.write(audioContents.toByteArray());
 			}
 		}
@@ -64,10 +64,10 @@ public class MyTextToSpeechClient {
 	 * @throws FileNotFoundException 
 	 */
 	public static void playback() throws JavaLayerException, FileNotFoundException {
-		InputStream audioFile = new FileInputStream(
+		var audioFile = new FileInputStream(
 				new File(Setting.get("google_cloud_text_to_speech_out_audio_file")));
-		AudioDevice device = FactoryRegistry.systemRegistry().createAudioDevice();
-		AdvancedPlayer player = new AdvancedPlayer(audioFile, device);
+		var audioDevice = FactoryRegistry.systemRegistry().createAudioDevice();
+		var player = new AdvancedPlayer(audioFile, audioDevice);
 		player.play();
 	}
 }

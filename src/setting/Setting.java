@@ -56,7 +56,7 @@ public class Setting {
 
 	public static void printAll() {
 		if (Boolean.valueOf(get("debug_mode"))) {
-			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+			for (var entry : properties.entrySet()) {
 				System.out.println("■ [" + entry.getKey() + "] :   " + entry.getValue());
 			}
 		}

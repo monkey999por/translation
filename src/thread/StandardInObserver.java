@@ -16,7 +16,7 @@ public class StandardInObserver implements Runnable {
 	public void run() {
 		try (Scanner scanner = new Scanner(System.in, Setting.get("standard_in_encoding"))) {
 			while (true) {
-				String input = scanner.nextLine();
+				var input = scanner.nextLine();
 				if (TextParser.isCommand(input)){
 					TaskMediator.order(TaskType.COMMAND, input);
 				} else {

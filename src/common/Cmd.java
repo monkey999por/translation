@@ -13,7 +13,7 @@ public class Cmd {
 	 * @return
 	 */
 	public static String execute(boolean async, String[] command) {
-		ProcessBuilder process = new ProcessBuilder(command);
+		var process = new ProcessBuilder(command);
 		Process p;
 		process.redirectErrorStream(true);
 
@@ -24,8 +24,8 @@ public class Cmd {
 			}
 			p.waitFor();
 
-			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			StringBuilder builder = new StringBuilder();
+			var reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			var builder = new StringBuilder();
 			String line = null;
 			while ((line = reader.readLine()) != null) {
 				builder.append(line);
