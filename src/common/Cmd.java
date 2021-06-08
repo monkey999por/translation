@@ -8,12 +8,12 @@ import setting.Setting;
 
 public class Cmd {
 	/**
-	 * @param async
-	 * @param command
-	 * @return
+	 * @param async - async/await
+	 * @param command command list. running by {@link ProcessBuilder}.
+	 * @return running result by command output from standard out.
 	 */
 	public static String execute(boolean async, String[] command) {
-		ProcessBuilder process = new ProcessBuilder(command);
+		var process = new ProcessBuilder(command);
 		Process p;
 		process.redirectErrorStream(true);
 
@@ -24,8 +24,8 @@ public class Cmd {
 			}
 			p.waitFor();
 
-			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			StringBuilder builder = new StringBuilder();
+			var reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			var builder = new StringBuilder();
 			String line = null;
 			while ((line = reader.readLine()) != null) {
 				builder.append(line);

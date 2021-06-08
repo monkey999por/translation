@@ -17,7 +17,7 @@ public class ClipBoardObserver implements Runnable {
 	public void run() {
 		// クリップボードを監視しながらポーリング
 		int gcCount = 0;
-		Long loopInterval = Long.valueOf(Setting.get("loop_interval"));
+		var loopInterval = Long.valueOf(Setting.get("loop_interval"));
 
 		while (true) {
 			if (lastTimeClipText.equals(MyClipBoard.getText())) {
@@ -38,7 +38,7 @@ public class ClipBoardObserver implements Runnable {
 			}
 
 			// translation worker run
-			String ct = MyClipBoard.getText();
+			var ct = MyClipBoard.getText();
 			TaskMediator.order(TaskType.TRANSLATE, ct);
 			lastTimeClipText = ct;
 		}
