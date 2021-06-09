@@ -4,7 +4,7 @@ import thread.StandardInObserver;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		Setting.load(args[0]);
+		Setting.init(args[0]);
 		welcomePrint();
 
 		// クリップボードを監視し、変更があった場合は翻訳者(TranslationWorker)を呼び出し 別スレッドで実行

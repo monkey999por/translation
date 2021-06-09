@@ -4,62 +4,84 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Map;
 import java.util.Properties;
 
+/**
+ * Singleton design. hold the one {@link Properties} object.
+ * require {@link Setting#init(String)} call once.
+ * (usually, called by main method. and no call after).
+ * properties format is normal ".properties".
+ * you can get properties used by {@link Setting#get(String)}
+ */
 public class Setting {
 
-	private static Properties properties;
+    private static Properties properties;
 
-	private static String filePath;
+    // properties file path.
+    private static String filePath;
 
-	private Setting() {
-	};
+    private Setting() {
+    }
 
-	/**
-	 * @param propPath
-	 */
-	public static void load(String propPath) {
-		if (properties == null) {
-			filePath = propPath;
-			properties = new Properties();
-			try {
-				properties.load(Files.newBufferedReader(Paths.get(propPath), StandardCharsets.UTF_8));
-			} catch (IOException e) {
-				// ファイル読み込みに失敗			
-				System.out.println(String.format("ファイルの読み込みに失敗しました。ファイル名:%s", propPath));
-			}
-		}
-	}
+    /**
+     * load properties.
+     *
+     * @param propPath properties file path
+     */
+    public static void init(String propPath) {
+        if (properties == null) {
+            filePath = propPath;
+            properties = new Properties();
+            load(propPath);
+        }
+    }
 
-	public static void reLoad(){
-		try {
-			properties.load(Files.newBufferedReader(Paths.get(filePath), StandardCharsets.UTF_8));
-		} catch (IOException e) {
-			System.out.println(String.format("ファイルの読み込みに失敗しました。ファイル名:%s", filePath));
-		}
-	}
+    /**
+     * if you edit properties when application running , after the call this method .
+     * How call? see {@link thread.StandardInObserver} and {@link worker.CommandExcuter}
+     */
+    public static void reLoad() {
+        load(filePath);
+    }
 
-	public static String getFilePath() {
-		return filePath;
-	}
+    private static void load(String propPath) {
+        try {
+            properties.load(Files.newBufferedReader(Paths.get(propPath), StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            System.out.println(String.format("ファイルの読み込みに失敗しました。ファイル名:%s", propPath));
+        }
+    }
 
-	/**
-	 * プロパティ値を取得する
-	 *
-	 * @param key キー
-	 * @return 値
-	 */
-	public static String get(String key) {
-		return properties.getProperty(key, null);
-	}
+    /**
+     * Get current Properties file path.
+     *
+     * @return Properties file path
+     */
+    public static String getFilePath() {
+        return filePath;
+    }
 
-	public static void printAll() {
-		if (Boolean.valueOf(get("debug_mode"))) {
-			for (var entry : properties.entrySet()) {
-				System.out.println("■ [" + entry.getKey() + "] :   " + entry.getValue());
-			}
-		}
-	}
+    /**
+     * same as {@link Properties#getProperty(String, String)}.
+     *
+     * @param key key
+     * @return matching key. if there is no matching key, return null.
+     */
+    public static String get(String key) {
+        return properties.getProperty(key, null);
+    }
 
+    /**
+     * print all properties.
+     * used by debug. (or when application start)
+     * format
+     * 　　■ [key] :  value
+     */
+    public static void printAll() {
+        if (Boolean.valueOf(get("debug_mode"))) {
+            for (var entry : properties.entrySet()) {
+                System.out.println("■ [" + entry.getKey() + "] :   " + entry.getValue());
+            }
+        }
+    }
 }
