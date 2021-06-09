@@ -1,11 +1,18 @@
 package worker;
 
 /**
- * クリップボード監視や標準入力監視のスレッド等からの入力から呼ばれ、タスクを分散する
+ * assign task.
  */
 public class TaskMediator {
-    public static void order(TaskType taskType, Object... args){
-        switch (taskType){
+
+    /**
+     * assign task.
+     *
+     * @param taskType task type.
+     * @param args     args passed task executor in target task.
+     */
+    public static void order(TaskType taskType, Object... args) {
+        switch (taskType) {
             case TRANSLATE:
                 TranslationWorker.run((String) args[0]);
                 break;
