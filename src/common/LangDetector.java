@@ -8,57 +8,80 @@ import setting.Setting;
 
 import java.util.ArrayList;
 
+/**
+ * detect language.
+ */
 public class LangDetector {
 
-	/**
-	 * 初期化されているかどうか。直接変更することは不可
-	 */
-	private static boolean isInit = false;
+    /**
+     * is init? changed by {@link LangDetector#init(String)} only.
+     */
+    private static boolean isInit = false;
 
-	private static synchronized void init(String profileDirectory) throws LangDetectException {
-		if (!isInit) {
-			DetectorFactory.loadProfile(profileDirectory);
-			isInit = true;
-		}
-	}
+    /**
+     * init.
+     *
+     * @param profileDirectory {@link DetectorFactory#loadProfile(String)}
+     * @throws LangDetectException
+     */
+    private static synchronized void init(String profileDirectory) throws LangDetectException {
+        if (!isInit) {
+            DetectorFactory.loadProfile(profileDirectory);
+            isInit = true;
+        }
+    }
 
-	/**
-	 * @return
-	 * @throws LangDetectException
-	 */
-	public static void init() throws LangDetectException {
-		init(Setting.get("lang_detector_profile"));
-	}
+    /**
+     * init lang detector.
+     *
+     * @throws LangDetectException
+     */
+    private static void init() throws LangDetectException {
+        init(Setting.get("lang_detector_profile"));
+    }
 
-	public static String detect(String text) throws LangDetectException {
-		init();
-		Detector detector = DetectorFactory.create();
-		detector.append(text);
-		return detector.detect();
-	}
+    /**
+     * detect args text language.
+     *
+     * @param text detect target.
+     * @return {@link Detector#detect()}
+     * @throws LangDetectException
+     */
+    public static String detect(String text) throws LangDetectException {
+        init();
+        Detector detector = DetectorFactory.create();
+        detector.append(text);
+        return detector.detect();
+    }
 
-	public static ArrayList<Language> detectLangs(String text) throws LangDetectException {
-		init();
-		Detector detector = DetectorFactory.create();
-		detector.append(text);
-		return detector.getProbabilities();
-	}
+    /**
+     * detect args text language.
+     *
+     * @param text detect target.
+     * @return {@link Detector#getProbabilities()}
+     * @throws LangDetectException
+     */
+    public static ArrayList<Language> detectLang(String text) throws LangDetectException {
+        init();
+        Detector detector = DetectorFactory.create();
+        detector.append(text);
+        return detector.getProbabilities();
+    }
 
-	/**
-	 * @param text
-	 * @return 
-	 * @throws LangDetectException 
-	 */
-	public static Boolean isJapanese(String text) throws LangDetectException {
-		init();
-		switch (detect(text)) {
-		case "ja":
-		case "ko":
-		case "zh-cn":
-			return true;
-		default:
-			return false;
-		}
-
-	}
+    /**
+     * @param text detect args text language.
+     * @return is japanese ?
+     * @throws LangDetectException
+     */
+    public static Boolean isJapanese(String text) throws LangDetectException {
+        init();
+        switch (detect(text)) {
+            case "ja":
+            case "ko":
+            case "zh-cn":
+                return true;
+            default:
+                return false;
+        }
+    }
 }
