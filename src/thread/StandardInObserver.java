@@ -20,7 +20,7 @@ public class StandardInObserver implements Runnable {
      */
     @Override
     public void run() {
-        try (Scanner scanner = new Scanner(System.in, Setting.get("standard_in_encoding"))) {
+        try (Scanner scanner = new Scanner(System.in, Setting.getAsString("standard_in_encoding"))) {
             while (true) {
                 var input = scanner.nextLine();
                 if (TextParser.isCommand(input)) {
@@ -31,7 +31,7 @@ public class StandardInObserver implements Runnable {
 
             }
         } catch (Exception e) {
-            if (Boolean.valueOf(Setting.get("debug_mode"))) {
+            if (Setting.getAsBoolean("debug_mode")) {
                 e.printStackTrace();
             }
         }

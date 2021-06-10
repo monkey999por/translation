@@ -38,7 +38,7 @@ public class Cmd {
 
         } catch (IOException | InterruptedException e) {
 
-            if (Boolean.valueOf(Setting.get("debug_mode"))) {
+            if (Setting.getAsBoolean("debug_mode")) {
                 e.printStackTrace();
             }
         }

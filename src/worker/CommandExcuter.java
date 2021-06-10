@@ -19,7 +19,7 @@ public class CommandExcuter {
     public static void run(String command) {
         try {
             String[] commands = command
-                    .replaceFirst(Setting.get("command_prefix") + "\\s*", "")
+                    .replaceFirst(Setting.getAsString("command_prefix") + "\\s*", "")
                     .split(" ");
             if (!runInnerCommand(commands[0])) {
                 Cmd.execute(false, commands);

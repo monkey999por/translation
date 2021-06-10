@@ -58,11 +58,11 @@ public class TranslationWorker {
 
                     //  play back text to speech result(mp3)
                     // see -> setting : "google_cloud_text_to_speech_out_audio_file"
-                    if (Boolean.valueOf(Setting.get("enable_google_cloud_text_to_speech"))) {
+                    if (Setting.getAsBoolean("enable_google_cloud_text_to_speech")) {
                         MyTextToSpeechClient.playback();
                     }
                 } catch (Exception e) {
-                    if (Boolean.valueOf(Setting.get("debug_mode"))) {
+                    if (Setting.getAsBoolean("debug_mode")) {
                         e.printStackTrace();
                     }
                 }

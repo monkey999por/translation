@@ -26,11 +26,11 @@ public class TranslationClient {
         try {
             text = codec.encode(text, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            if (Boolean.valueOf(Setting.get("debug_mode"))) {
+            if (Setting.getAsBoolean("debug_mode")) {
                 e.printStackTrace();
             }
         }
-        String url = Setting.get("translate_request_url");
+        String url = Setting.getAsString("translate_request_url");
         return url.replace("{text}", text)
                 .replace("{source}", source)
                 .replace("{target}", target);

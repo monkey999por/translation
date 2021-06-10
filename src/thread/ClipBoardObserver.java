@@ -23,7 +23,7 @@ public class ClipBoardObserver implements Runnable {
     public void run() {
         // クリップボードを監視しながらポーリング
         int gcCount = 0;
-        var loopInterval = Long.valueOf(Setting.get("loop_interval"));
+        var loopInterval = Setting.getAsLong("loop_interval");
 
         while (true) {
             if (lastTimeClipText.equals(MyClipBoard.getText())) {
@@ -36,7 +36,7 @@ public class ClipBoardObserver implements Runnable {
                 try {
                     Thread.sleep(loopInterval);
                 } catch (InterruptedException e) {
-                    if (Boolean.valueOf(Setting.get("debug_mode"))) {
+                    if (Setting.getAsBoolean("debug_mode")) {
                         e.printStackTrace();
                     }
                 }

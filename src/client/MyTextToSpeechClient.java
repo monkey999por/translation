@@ -6,7 +6,6 @@ import javazoom.jl.player.FactoryRegistry;
 import javazoom.jl.player.advanced.AdvancedPlayer;
 import setting.Setting;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -21,7 +20,7 @@ public class MyTextToSpeechClient {
      * see https://github.com/googleapis/java-texttospeech/blob/HEAD/samples/snippets/src/main/java/com/example/texttospeech/QuickstartSample.java
      */
     public static void request(String text) throws Exception {
-        if (!Boolean.valueOf(Setting.get("enable_google_cloud_text_to_speech"))) {
+        if (!Setting.getAsBoolean("enable_google_cloud_text_to_speech")) {
             return;
         }
         // Instantiates a client
@@ -48,7 +47,7 @@ public class MyTextToSpeechClient {
             var audioContents = response.getAudioContent();
 
             // Write the response to the output file.
-            try (var out = new FileOutputStream(Setting.get("google_cloud_text_to_speech_out_audio_file"))) {
+            try (var out = new FileOutputStream(Setting.getAsString("google_cloud_text_to_speech_out_audio_file"))) {
                 out.write(audioContents.toByteArray());
             }
         }
@@ -63,7 +62,7 @@ public class MyTextToSpeechClient {
      */
     public static void playback() throws JavaLayerException, FileNotFoundException {
         var audioFile = new FileInputStream(
-                new File(Setting.get("google_cloud_text_to_speech_out_audio_file")));
+                Setting.getAsFile("google_cloud_text_to_speech_out_audio_file"));
         var audioDevice = FactoryRegistry.systemRegistry().createAudioDevice();
         var player = new AdvancedPlayer(audioFile, audioDevice);
         player.play();

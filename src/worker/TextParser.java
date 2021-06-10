@@ -16,7 +16,7 @@ public class TextParser {
      */
     public static boolean isCommand(String str) {
         var chars = str.toCharArray();
-        var prefix = Setting.get("command_prefix").toCharArray()[0];
+        var prefix = Setting.getAsString("command_prefix").toCharArray()[0];
         for (var aChar : chars) {
             if (aChar == ' ') {
                 continue;

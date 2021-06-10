@@ -37,7 +37,7 @@ public class LangDetector {
      * @throws LangDetectException
      */
     private static void init() throws LangDetectException {
-        init(Setting.get("lang_detector_profile"));
+        init(Setting.getAsString("lang_detector_profile"));
     }
 
     /**
