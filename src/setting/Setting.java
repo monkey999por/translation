@@ -1,5 +1,7 @@
 package setting;
 
+import worker.CommandExecutor;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -41,7 +43,7 @@ public class Setting {
 
     /**
      * if you edit properties when application running , after the call this method .
-     * How call? see {@link thread.StandardInObserver} and {@link worker.CommandExcuter}
+     * How call? see {@link thread.StandardInObserver} and {@link CommandExecutor}
      */
     public static void reLoad() {
         load(filePath);

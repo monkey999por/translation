@@ -17,7 +17,7 @@ public class TaskMediator {
                 TranslationWorker.run((String) args[0]);
                 break;
             case COMMAND:
-                CommandExcuter.run((String) args[0]);
+                CommandExecutor.run((String) args[0]);
                 break;
         }
     }

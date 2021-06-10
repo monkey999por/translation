@@ -6,7 +6,7 @@ import setting.Setting;
 /**
  * any command execute by this.
  */
-public class CommandExcuter {
+public class CommandExecutor {
 
     /**
      * used by input from standard in.
@@ -14,7 +14,7 @@ public class CommandExcuter {
      * @param command format -> default is "{command_prefix} {command}" .
      *                ※ "command_prefix" is defined by setting.properties.
      *                if this is outer command, executed by {@link Cmd#execute(boolean, String[])}.
-     *                if this is inner command, executed by {@link CommandExcuter#runInnerCommand(String)}.
+     *                if this is inner command, executed by {@link CommandExecutor#runInnerCommand(String)}.
      */
     public static void run(String command) {
         try {
