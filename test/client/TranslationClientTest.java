@@ -17,16 +17,12 @@ import static org.assertj.core.api.Assertions.*;
  */
 class TranslationClientTest {
 
-    @InjectMocks
-    TranslationClient translationClient;
-
     /**
      * @see TranslationClient#createRequestUrl(String, String, String)
      */
     @Test
     @DisplayName("test")
     void paramIsJapanese() {
-
         String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
