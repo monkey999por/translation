@@ -1,7 +1,7 @@
 package thread;
 
 import common.MyClipBoard;
-import setting.Setting;
+import setting.common.Setting;
 import worker.TaskMediator;
 import worker.TaskType;
 

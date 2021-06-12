@@ -1,6 +1,6 @@
 package common;
 
-import setting.Setting;
+import setting.common.Setting;
 
 import java.io.BufferedReader;
 import java.io.IOException;

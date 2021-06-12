@@ -4,7 +4,7 @@ import com.google.cloud.texttospeech.v1.*;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.FactoryRegistry;
 import javazoom.jl.player.advanced.AdvancedPlayer;
-import setting.Setting;
+import setting.common.Setting;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

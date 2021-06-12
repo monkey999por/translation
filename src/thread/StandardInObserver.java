@@ -1,6 +1,6 @@
 package thread;
 
-import setting.Setting;
+import setting.common.Setting;
 import worker.TaskMediator;
 import worker.TaskType;
 import worker.TextParser;

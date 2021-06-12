@@ -4,9 +4,11 @@ import com.cybozu.labs.langdetect.LangDetectException;
 import common.Cmd;
 import common.LangDetector;
 import org.apache.commons.codec.net.URLCodec;
-import setting.Setting;
+import setting.common.Setting;
+import setting.translate.TargetLanguageCode;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Objects;
 
 /**
  * see https://script.google.com/home/projects/1sFWfV_MOJbmBeTLT_R9F4Qq0qPolgkRsVt8A_sCMI2C9DTccZBRdHFDt/edit
@@ -22,24 +24,25 @@ public class TranslationClient {
      * @param target after language
      * @return request URL as google apps script as "google_translate_api"
      */
-    public static String createRequestUrl(String text, String source, String target) {
+    public static String createRequestUrl(String text, TargetLanguageCode source, TargetLanguageCode target) {
         try {
-            text = codec.encode(text, "UTF-8");
+            text = Objects.isNull(text) ? "" : codec.encode(text, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             if (Setting.getAsBoolean("debug_mode")) {
                 e.printStackTrace();
             }
         }
+
         String url = Setting.getAsString("translate_request_url");
         return url.replace("{text}", text)
-                .replace("{source}", source)
-                .replace("{target}", target);
+                .replace("{source}", source.toString())
+                .replace("{target}", target.toString());
     }
 
     /**
      * translate by URL.
      *
-     * @param requestUrl created by {@link TranslationClient#createRequestUrl(String, String, String)}.
+     * @param requestUrl created by {@link TranslationClient#createRequestUrl(String, TargetLanguageCode, TargetLanguageCode)}.
      * @return translate result.
      */
     public static String request(String requestUrl) {
@@ -57,8 +60,8 @@ public class TranslationClient {
      */
     public static String translate(String text) throws LangDetectException {
         String requestUrl = LangDetector.isJapanese(text)
-                ? TranslationClient.createRequestUrl(text, "ja", "en")
-                : TranslationClient.createRequestUrl(text, "en", "ja");
+                ? TranslationClient.createRequestUrl(text, TargetLanguageCode.JAPANESE, TargetLanguageCode.ENGLISH)
+                : TranslationClient.createRequestUrl(text, TargetLanguageCode.ENGLISH, TargetLanguageCode.JAPANESE);
 
         return request(requestUrl);
     }

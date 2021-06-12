@@ -1,4 +1,4 @@
-package setting;
+package setting.common;
 
 import worker.CommandExecutor;
 
@@ -133,7 +133,7 @@ public class Setting {
      */
     public static Boolean getAsBoolean(String key) {
         var b = Boolean.valueOf(get(key));
-        if (b == null){
+        if (b == null) {
             System.out.println("can't convert to boolean. key is \"" + key + "\"");
             return null;
         } else {

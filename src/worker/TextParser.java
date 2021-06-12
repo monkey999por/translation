@@ -1,6 +1,6 @@
 package worker;
 
-import setting.Setting;
+import setting.common.Setting;
 
 /**
  * common text parser optimize this application.

@@ -4,7 +4,7 @@ import client.MyTextToSpeechClient;
 import client.TranslationClient;
 import com.cybozu.labs.langdetect.LangDetectException;
 import common.LangDetector;
-import setting.Setting;
+import setting.common.Setting;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;

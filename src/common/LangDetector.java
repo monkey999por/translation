@@ -4,7 +4,7 @@ import com.cybozu.labs.langdetect.Detector;
 import com.cybozu.labs.langdetect.DetectorFactory;
 import com.cybozu.labs.langdetect.LangDetectException;
 import com.cybozu.labs.langdetect.Language;
-import setting.Setting;
+import setting.common.Setting;
 
 import java.util.ArrayList;
 

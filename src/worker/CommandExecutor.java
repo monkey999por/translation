@@ -1,7 +1,7 @@
 package worker;
 
 import common.Cmd;
-import setting.Setting;
+import setting.common.Setting;
 
 /**
  * any command execute by this.
