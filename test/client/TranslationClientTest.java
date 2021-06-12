@@ -18,7 +18,7 @@ class TranslationClientTest {
      * @see TranslationClient#createRequestUrl(String, TargetLanguageCode, TargetLanguageCode)
      */
     @Test
-    @DisplayName("all param japanese. the first args encoded.")
+    @DisplayName("param japanese. the first args encoded.")
     void paramIsJapanese() {
         String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
@@ -35,7 +35,7 @@ class TranslationClientTest {
      * @see TranslationClient#createRequestUrl(String, TargetLanguageCode, TargetLanguageCode)
      */
     @Test
-    @DisplayName("all param alphabet")
+    @DisplayName("param alphabet")
     void paramIsAlphabet() {
         String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
@@ -86,7 +86,7 @@ class TranslationClientTest {
      * @see TranslationClient#createRequestUrl(String, TargetLanguageCode, TargetLanguageCode)
      */
     @Test
-    @DisplayName("including anything(symbol, number, newline code, ..other, like regexp)")
+    @DisplayName("including anything(symbol, number, newline code, like regexp, ..other)")
     void mixedAnything() {
         String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
@@ -103,7 +103,7 @@ class TranslationClientTest {
      * @see TranslationClient#createRequestUrl(String, TargetLanguageCode, TargetLanguageCode)
      */
     @Test
-    @DisplayName("param including null")
+    @DisplayName("including null")
     void paramIsNull() {
         String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
