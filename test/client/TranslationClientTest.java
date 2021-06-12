@@ -1,5 +1,7 @@
 package client;
 
+import com.cybozu.labs.langdetect.LangDetectException;
+import common.LangDetector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -7,10 +9,13 @@ import setting.common.Setting;
 import setting.translate.TargetLanguageCode;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mockStatic;
 
 /**
  * @see <a href="https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html">mockit reference</a>
+ * Exclusion method : {@link TranslationClient#request(String)}
  */
 class TranslationClientTest {
 
@@ -113,6 +118,68 @@ class TranslationClientTest {
             assertThat(TranslationClient.createRequestUrl(null, TargetLanguageCode.JAPANESE, TargetLanguageCode.ENGLISH))
                     .isNotNull()
                     .isEqualTo("https://dummy?text=\\\"\\\"&source=ja&target=en");
+        }
+    }
+
+    /**
+     * @see TranslationClient#translate(String)
+     */
+    @Test
+    @DisplayName("convert param and call next inner method")
+    void convertParamAndCallNextMethod() throws LangDetectException {
+        try (var langDetector = mockStatic(LangDetector.class);
+             var client = mockStatic(TranslationClient.class)
+        ) {
+            langDetector.when(() -> LangDetector.isJapanese(anyString()))
+                    .thenReturn(true);
+            // this is mock. called by TranslationClient#translate
+            client.when(() -> TranslationClient.createRequestUrl(anyString(), any(), any()))
+                    .thenAnswer(invocationOnMock -> {
+                        return invocationOnMock.getArgument(1).toString().equals("ja") ? "ja" : "en";
+                    });
+            // this is mock. called by TranslationClient#translate
+            client.when(() -> TranslationClient.request(anyString()))
+                    .thenAnswer(invocationOnMock -> {
+                        return invocationOnMock.getArgument(0);
+                    });
+
+            // this is test target. call real method.
+            client.when(() -> TranslationClient.translate(anyString()))
+                    .thenCallRealMethod();
+
+            assertThat(TranslationClient.translate("ja"))
+                    .isEqualTo("ja");
+        }
+    }
+
+    /**
+     * @see TranslationClient#translate(String)
+     */
+    @Test
+    @DisplayName("convert param and call next inner method2")
+    void convertParamAndCallNextMethod_2() throws LangDetectException {
+        try (var langDetector = mockStatic(LangDetector.class);
+             var client = mockStatic(TranslationClient.class)
+        ) {
+            langDetector.when(() -> LangDetector.isJapanese(anyString()))
+                    .thenReturn(false);
+            // this is mock. called by TranslationClient#translate
+            client.when(() -> TranslationClient.createRequestUrl(anyString(), any(), any()))
+                    .thenAnswer(invocationOnMock -> {
+                        return invocationOnMock.getArgument(1).toString().equals("ja") ? "ja" : "en";
+                    });
+            // this is mock. called by TranslationClient#translate
+            client.when(() -> TranslationClient.request(anyString()))
+                    .thenAnswer(invocationOnMock -> {
+                        return invocationOnMock.getArgument(0);
+                    });
+
+            // this is test target. call real method.
+            client.when(() -> TranslationClient.translate(anyString()))
+                    .thenCallRealMethod();
+
+            assertThat(TranslationClient.translate("en"))
+                    .isEqualTo("en");
         }
     }
 }
