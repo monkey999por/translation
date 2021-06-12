@@ -1,6 +1,7 @@
 package client;
 
 import com.cybozu.labs.langdetect.LangDetectException;
+import common.Cmd;
 import common.LangDetector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,9 +9,11 @@ import org.mockito.Mockito;
 import setting.common.Setting;
 import setting.translate.TargetLanguageCode;
 
+import java.util.Arrays;
+
+import static org.assertj.core.api.Assertions.anyOf;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mockStatic;
 
 /**
@@ -24,7 +27,7 @@ class TranslationClientTest {
      */
     @Test
     @DisplayName("param japanese. the first args encoded.")
-    void paramIsJapanese() {
+    void createRequestUrl_paramIsJapanese() {
         String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
@@ -41,7 +44,7 @@ class TranslationClientTest {
      */
     @Test
     @DisplayName("param alphabet")
-    void paramIsAlphabet() {
+    void createRequestUrl_paramIsAlphabet() {
         String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
@@ -58,7 +61,7 @@ class TranslationClientTest {
      */
     @Test
     @DisplayName("including half-width space before and after, and middle")
-    void includingHalfSpace() {
+    void createRequestUrl_includingHalfSpace() {
         String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
@@ -75,7 +78,7 @@ class TranslationClientTest {
      */
     @Test
     @DisplayName("including Full-width space before and after, and middle")
-    void includingFullSpace() {
+    void createRequestUrl_includingFullSpace() {
         String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
@@ -92,7 +95,7 @@ class TranslationClientTest {
      */
     @Test
     @DisplayName("including anything(symbol, number, newline code, like regexp, ..other)")
-    void mixedAnything() {
+    void createRequestUrl_mixedAnything() {
         String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
@@ -109,7 +112,7 @@ class TranslationClientTest {
      */
     @Test
     @DisplayName("including null")
-    void paramIsNull() {
+    void createRequestUrl_paramIsNull() {
         String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
@@ -122,11 +125,38 @@ class TranslationClientTest {
     }
 
     /**
+     * @see TranslationClient#request(String)
+     */
+    @Test
+    @DisplayName("method \"request\" call subroutine")
+    void request_callNext() {
+        try (var mockCmd = mockStatic(Cmd.class)) {
+            mockCmd.when(()-> Cmd.execute(anyBoolean(), any()))
+                    .thenAnswer(invocationOnMock -> {
+                        var paramAll = new StringBuffer();
+                        paramAll.append(invocationOnMock.getArgument(0).toString()).append(" : ");
+                        Arrays.stream((String[])invocationOnMock.getArgument(1))
+                                .forEach(o -> {
+                                    paramAll.append(o.toString()).append(" : ");
+                                });
+                        return paramAll.toString();
+                    });
+
+            assertThat(TranslationClient.request("request_url"))
+                    .isNotNull()
+                    .isEqualTo("false : curl : -L : -s : request_url : ");
+
+        }
+    }
+
+
+
+    /**
      * @see TranslationClient#translate(String)
      */
     @Test
     @DisplayName("convert param and call next inner method")
-    void convertParamAndCallNextMethod() throws LangDetectException {
+    void translate_convertParamAndCallNextMethod() throws LangDetectException {
         try (var langDetector = mockStatic(LangDetector.class);
              var client = mockStatic(TranslationClient.class)
         ) {
@@ -157,7 +187,7 @@ class TranslationClientTest {
      */
     @Test
     @DisplayName("convert param and call next inner method2")
-    void convertParamAndCallNextMethod_2() throws LangDetectException {
+    void translate_convertParamAndCallNextMethod_2() throws LangDetectException {
         try (var langDetector = mockStatic(LangDetector.class);
              var client = mockStatic(TranslationClient.class)
         ) {
@@ -180,6 +210,39 @@ class TranslationClientTest {
 
             assertThat(TranslationClient.translate("en"))
                     .isEqualTo("en");
+        }
+    }
+
+    /**
+     * @see TranslationClient#translate(String)
+     */
+    @Test
+    @DisplayName("param is null")
+    void translate_paramIsNull() throws LangDetectException {
+        try (var langDetector = mockStatic(LangDetector.class);
+             var client = mockStatic(TranslationClient.class)
+        ) {
+            langDetector.when(() -> LangDetector.isJapanese(anyString()))
+                    .thenAnswer(invocationOnMock -> {
+                        return invocationOnMock.getArgument(0).equals("");
+                    });
+            // this is mock. called by TranslationClient#translate
+            client.when(() -> TranslationClient.createRequestUrl(anyString(), any(), any()))
+                    .thenAnswer(invocationOnMock -> {
+                        return invocationOnMock.getArgument(0).equals("") ?
+                                "first argument is null" : "first argument is not null";
+                    });
+            // this is mock. called by TranslationClient#translate
+            client.when(() -> TranslationClient.request(anyString()))
+                    .thenAnswer(invocationOnMock -> {
+                        return invocationOnMock.getArgument(0);
+                    });
+            // this is test target. call real method.
+            client.when(() -> TranslationClient.translate(any()))
+                    .thenCallRealMethod();
+
+            assertThat(TranslationClient.translate(null))
+                    .isEqualTo("first argument is null");
         }
     }
 }

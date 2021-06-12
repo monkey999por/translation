@@ -14,7 +14,7 @@ import java.util.Objects;
  * see https://script.google.com/home/projects/1sFWfV_MOJbmBeTLT_R9F4Qq0qPolgkRsVt8A_sCMI2C9DTccZBRdHFDt/edit
  */
 public class TranslationClient {
-    static URLCodec codec = new URLCodec("UTF-8");
+    private static URLCodec codec = new URLCodec("UTF-8");
 
     /**
      * create request URL as google apps script as "google_translate_api".
@@ -59,9 +59,10 @@ public class TranslationClient {
      * @throws LangDetectException
      */
     public static String translate(String text) throws LangDetectException {
+        text = Objects.isNull(text) ? "" : text;
         String requestUrl = LangDetector.isJapanese(text)
-                ? TranslationClient.createRequestUrl(text, TargetLanguageCode.JAPANESE, TargetLanguageCode.ENGLISH)
-                : TranslationClient.createRequestUrl(text, TargetLanguageCode.ENGLISH, TargetLanguageCode.JAPANESE);
+                ? createRequestUrl(text, TargetLanguageCode.JAPANESE, TargetLanguageCode.ENGLISH)
+                : createRequestUrl(text, TargetLanguageCode.ENGLISH, TargetLanguageCode.JAPANESE);
 
         return request(requestUrl);
     }
