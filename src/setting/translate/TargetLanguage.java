@@ -13,8 +13,8 @@ public enum TargetLanguage {
         this.languageCode = code;
     }
 
-    @Override
-    public String toString() {
+
+    public String getLanguageCode() {
         return this.languageCode;
     }
 }

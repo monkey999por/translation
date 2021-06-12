@@ -11,22 +11,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TargetLanguageTest {
 
     /**
-     * @see TargetLanguage#toString()
+     * @see TargetLanguage#getLanguageCode()
      */
     @Test
     @DisplayName("init JAPANESE and get value")
     void initAndGetCode_ja() {
-        assertThat(TargetLanguage.JAPANESE.toString())
+        assertThat(TargetLanguage.JAPANESE.getLanguageCode())
                 .isEqualTo("ja");
     }
 
     /**
-     * @see TargetLanguage#toString()
+     * @see TargetLanguage#getLanguageCode()
      */
     @Test
     @DisplayName("init ENGLISH and get value")
     void initAndGetCode_en() {
-        assertThat(TargetLanguage.ENGLISH.toString())
+        assertThat(TargetLanguage.ENGLISH.getLanguageCode())
                 .isEqualTo("en");
     }
 }
