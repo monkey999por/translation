@@ -3,13 +3,13 @@ package setting.translate;
 /**
  * target of translation language code.
  */
-public enum TargetLanguageCode {
+public enum TargetLanguage {
     ENGLISH("en"),
     JAPANESE("ja");
 
-    private String languageCode;
+    private final String languageCode;
 
-    TargetLanguageCode(String code) {
+    TargetLanguage(String code) {
         this.languageCode = code;
     }
 

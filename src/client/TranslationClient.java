@@ -5,7 +5,7 @@ import common.Cmd;
 import common.LangDetector;
 import org.apache.commons.codec.net.URLCodec;
 import setting.common.Setting;
-import setting.translate.TargetLanguageCode;
+import setting.translate.TargetLanguage;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Objects;
@@ -24,7 +24,7 @@ public class TranslationClient {
      * @param target after language
      * @return request URL as google apps script as "google_translate_api"
      */
-    public static String createRequestUrl(String text, TargetLanguageCode source, TargetLanguageCode target) {
+    public static String createRequestUrl(String text, TargetLanguage source, TargetLanguage target) {
         try {
             text = Objects.isNull(text) ? "" : codec.encode(text, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -42,7 +42,7 @@ public class TranslationClient {
     /**
      * translate by URL.
      *
-     * @param requestUrl created by {@link TranslationClient#createRequestUrl(String, TargetLanguageCode, TargetLanguageCode)}.
+     * @param requestUrl created by {@link TranslationClient#createRequestUrl(String, TargetLanguage, TargetLanguage)}.
      * @return translate result.
      */
     public static String request(String requestUrl) {
@@ -61,8 +61,8 @@ public class TranslationClient {
     public static String translate(String text) throws LangDetectException {
         text = Objects.isNull(text) ? "" : text;
         String requestUrl = LangDetector.isJapanese(text)
-                ? createRequestUrl(text, TargetLanguageCode.JAPANESE, TargetLanguageCode.ENGLISH)
-                : createRequestUrl(text, TargetLanguageCode.ENGLISH, TargetLanguageCode.JAPANESE);
+                ? createRequestUrl(text, TargetLanguage.JAPANESE, TargetLanguage.ENGLISH)
+                : createRequestUrl(text, TargetLanguage.ENGLISH, TargetLanguage.JAPANESE);
 
         return request(requestUrl);
     }

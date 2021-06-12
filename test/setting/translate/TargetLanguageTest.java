@@ -6,27 +6,27 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * @see TargetLanguageCode
+ * @see TargetLanguage
  */
-class TargetLanguageCodeTest {
+class TargetLanguageTest {
 
     /**
-     * @see TargetLanguageCode#toString()
+     * @see TargetLanguage#toString()
      */
     @Test
     @DisplayName("init JAPANESE and get value")
     void initAndGetCode_ja() {
-        assertThat(TargetLanguageCode.JAPANESE.toString())
+        assertThat(TargetLanguage.JAPANESE.toString())
                 .isEqualTo("ja");
     }
 
     /**
-     * @see TargetLanguageCode#toString()
+     * @see TargetLanguage#toString()
      */
     @Test
     @DisplayName("init ENGLISH and get value")
     void initAndGetCode_en() {
-        assertThat(TargetLanguageCode.ENGLISH.toString())
+        assertThat(TargetLanguage.ENGLISH.toString())
                 .isEqualTo("en");
     }
 }
