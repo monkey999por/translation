@@ -124,9 +124,15 @@ public class Setting {
      */
     @NotNull
     public static Integer getAsInteger(String key) {
-        var value = get(key);
-        likeNumber(key, value);
-        return Integer.valueOf(value);
+        try {
+            var value = get(key);
+            likeNumber(key, value);
+            return Integer.valueOf(value);
+        } catch (Exception e) {
+            ApplicationFailure("key: " + key + "\r\n\r\n" + e);
+            // dummy. unreachable code
+            return Integer.MAX_VALUE;
+        }
     }
 
     /**
@@ -136,9 +142,15 @@ public class Setting {
      */
     @NotNull
     public static Double getAsDouble(String key) {
-        var value = get(key);
-        likeNumber(key, value);
-        return Double.valueOf(value);
+        try {
+            var value = get(key);
+            likeNumber(key, value);
+            return Double.valueOf(value);
+        } catch (Exception e) {
+            ApplicationFailure("key: " + key + "\r\n\r\n" + e);
+            // dummy. unreachable code
+            return Double.MIN_NORMAL;
+        }
     }
 
     /**
@@ -148,9 +160,15 @@ public class Setting {
      */
     @NotNull
     public static Long getAsLong(String key) {
-        var value = get(key);
-        likeNumber(key, value);
-        return Long.valueOf(value);
+        try {
+            var value = get(key);
+            likeNumber(key, value);
+            return Long.valueOf(value);
+        } catch (Exception e) {
+            ApplicationFailure("key: " + key + "\r\n\r\n" + e);
+            // dummy. unreachable code
+            return Long.MAX_VALUE;
+        }
     }
 
     /**
@@ -160,9 +178,15 @@ public class Setting {
      */
     @NotNull
     public static Boolean getAsBoolean(String key) {
-        var value = get(key).toLowerCase();
-        likeBoolean(key, value);
-        return Boolean.valueOf(value);
+        try {
+            var value = get(key).toLowerCase();
+            likeBoolean(key, value);
+            return Boolean.valueOf(value);
+        } catch (Exception e) {
+            ApplicationFailure("key: " + key + "\r\n\r\n" + e);
+            // dummy. unreachable code
+            return false;
+        }
     }
 
     /**
@@ -172,7 +196,13 @@ public class Setting {
      */
     @NotNull
     public static File getAsFile(String key) {
-        return new File(get(key));
+        try {
+            return new File(get(key));
+        } catch (Exception e) {
+            ApplicationFailure("key: " + key + "\r\n\r\n" + e);
+            // dummy. unreachable code
+            return new File("dummy");
+        }
     }
 
     /**
@@ -184,10 +214,10 @@ public class Setting {
         try {
             return new URL(get(key));
         } catch (MalformedURLException e) {
-            ApplicationFailure("key: " + key + "\r\n\r\n" +
-                    e);
+            ApplicationFailure("key: " + key + "\r\n\r\n" + e);
+            // dummy. unreachable code
+            return null;
         }
-        return null;
     }
 
     /**
