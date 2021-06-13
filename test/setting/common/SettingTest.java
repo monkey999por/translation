@@ -20,7 +20,7 @@ class SettingTest {
     private final RefMethod likeNumber = new RefMethod(Setting.class, "likeNumber", String.class, String.class);
     private final RefMethod likeBoolean = new RefMethod(Setting.class, "likeBoolean", String.class, String.class);
     private final RefMethod isBlankKey = new RefMethod(Setting.class, "isBlankKey", String.class);
-    private final RefMethod ApplicationFailure = new RefMethod(Setting.class, "ApplicationFailure", String.class);
+    //    private final RefMethod ApplicationFailure = new RefMethod(Setting.class, "ApplicationFailure", String.class);
     private final RefMethod discard = new RefMethod(Setting.class, "discard");
     private final RefMethod get = new RefMethod(Setting.class, "get", String.class);
 
@@ -163,7 +163,7 @@ class SettingTest {
 
     /**
      * @see Setting#getAsString(String) As(String)
-     * test with inner private method.
+     * test with inner private method {@link #get}
      */
     @Test
     @DisplayName("can't get property.(key is right. property has no value")
@@ -314,7 +314,7 @@ class SettingTest {
     @Test
     @DisplayName("key is null")
     @ExpectSystemExitWithStatus(-1)
-    void getAsInteger_keyIsNull() throws Exception {
+    void getAsInteger_keyIsNull() {
         Setting.init(propertiesPath);
         Setting.getAsInteger("undefined key");
     }
@@ -325,7 +325,7 @@ class SettingTest {
     @Test
     @DisplayName("not number")
     @ExpectSystemExitWithStatus(-1)
-    void getAsInteger_notNumber() throws Exception {
+    void getAsInteger_notNumber() {
         Setting.init(propertiesPath);
         Setting.getAsInteger("debug_mode");
     }
@@ -336,7 +336,7 @@ class SettingTest {
     @Test
     @DisplayName("type missing")
     @ExpectSystemExitWithStatus(-1)
-    void getAsInteger_typeMissing() throws Exception {
+    void getAsInteger_typeMissing() {
         Setting.init(propertiesPath);
         Setting.getAsInteger("double_like");
     }
@@ -346,7 +346,7 @@ class SettingTest {
      */
     @Test
     @DisplayName("type missing")
-    void getAsInteger_success() throws Exception {
+    void getAsInteger_success() {
         Setting.init(propertiesPath);
         assertThat(Setting.getAsInteger("integer_like"))
                 .isEqualTo(10);
@@ -358,7 +358,7 @@ class SettingTest {
     @Test
     @DisplayName("key is null")
     @ExpectSystemExitWithStatus(-1)
-    void getAsDouble_keyIsNull() throws Exception {
+    void getAsDouble_keyIsNull() {
         Setting.init(propertiesPath);
         Setting.getAsDouble("undefined key");
     }
@@ -369,7 +369,7 @@ class SettingTest {
     @Test
     @DisplayName("not number")
     @ExpectSystemExitWithStatus(-1)
-    void getAsDouble_notNumber() throws Exception {
+    void getAsDouble_notNumber() {
         Setting.init(propertiesPath);
         Setting.getAsDouble("debug_mode");
     }
@@ -380,7 +380,7 @@ class SettingTest {
     @Test
     @DisplayName("type missing")
     @ExpectSystemExitWithStatus(-1)
-    void getAsDouble_typeMissing() throws Exception {
+    void getAsDouble_typeMissing() {
         Setting.init(propertiesPath);
         Setting.getAsDouble("double_type_missing");
     }
@@ -390,7 +390,7 @@ class SettingTest {
      */
     @Test
     @DisplayName("type missing")
-    void getAsDouble_success() throws Exception {
+    void getAsDouble_success() {
         Setting.init(propertiesPath);
         assertThat(Setting.getAsDouble("double_like"))
                 .isEqualTo(10.0);
@@ -402,7 +402,7 @@ class SettingTest {
     @Test
     @DisplayName("key is null")
     @ExpectSystemExitWithStatus(-1)
-    void getAsLong_keyIsNull() throws Exception {
+    void getAsLong_keyIsNull() {
         Setting.init(propertiesPath);
         Setting.getAsLong("undefined key");
     }
@@ -413,7 +413,7 @@ class SettingTest {
     @Test
     @DisplayName("not number")
     @ExpectSystemExitWithStatus(-1)
-    void getAsLong_notNumber() throws Exception {
+    void getAsLong_notNumber() {
         Setting.init(propertiesPath);
         Setting.getAsLong("debug_mode");
     }
@@ -424,7 +424,7 @@ class SettingTest {
     @Test
     @DisplayName("type missing")
     @ExpectSystemExitWithStatus(-1)
-    void getAsLong_typeMissing() throws Exception {
+    void getAsLong_typeMissing() {
         Setting.init(propertiesPath);
         Setting.getAsLong("decimal_like");
     }
@@ -434,7 +434,7 @@ class SettingTest {
      */
     @Test
     @DisplayName("type missing")
-    void getAsLong_success() throws Exception {
+    void getAsLong_success() {
         Setting.init(propertiesPath);
         assertThat(Setting.getAsLong("long_like"))
                 .isEqualTo(1000000000000000000L);
@@ -446,7 +446,7 @@ class SettingTest {
     @Test
     @DisplayName("key is null")
     @ExpectSystemExitWithStatus(-1)
-    void getAsBoolean_keyIsNull() throws Exception {
+    void getAsBoolean_keyIsNull() {
         Setting.init(propertiesPath);
         Setting.getAsBoolean("undefined key");
     }
@@ -457,7 +457,7 @@ class SettingTest {
     @Test
     @DisplayName("not boolean like")
     @ExpectSystemExitWithStatus(-1)
-    void getAsBoolean_notBoolean() throws Exception {
+    void getAsBoolean_notBoolean() {
         Setting.init(propertiesPath);
         Setting.getAsBoolean("double_like");
     }
@@ -468,7 +468,7 @@ class SettingTest {
     @Test
     @DisplayName("type missing")
     @ExpectSystemExitWithStatus(-1)
-    void getAsBoolean_typeMissing() throws Exception {
+    void getAsBoolean_typeMissing() {
         Setting.init(propertiesPath);
         Setting.getAsBoolean("decimal_like");
     }
@@ -478,7 +478,7 @@ class SettingTest {
      */
     @Test
     @DisplayName("type missing")
-    void getAsBoolean_success() throws Exception {
+    void getAsBoolean_success() {
         Setting.init(propertiesPath);
         assertThat(Setting.getAsBoolean("true"))
                 .isEqualTo(true);
@@ -494,7 +494,7 @@ class SettingTest {
     @Test
     @DisplayName("key is null")
     @ExpectSystemExitWithStatus(-1)
-    void getAsFile_keyIsNull() throws Exception {
+    void getAsFile_keyIsNull() {
         Setting.init(propertiesPath);
         Setting.getAsFile("undefined key");
     }
@@ -505,7 +505,7 @@ class SettingTest {
     @Test
     @DisplayName("type missing")
     @ExpectSystemExitWithStatus(-1)
-    void getAsFile_typeMissing() throws Exception {
+    void getAsFile_typeMissing() {
         Setting.init(propertiesPath);
         Setting.getAsFile("decimal_like");
     }
@@ -515,7 +515,7 @@ class SettingTest {
      */
     @Test
     @DisplayName("type missing")
-    void getAsFile_success() throws Exception {
+    void getAsFile_success() {
         Setting.init(propertiesPath);
         assertThat("how assert???")
                 .isEqualTo("");
@@ -528,7 +528,7 @@ class SettingTest {
     @Test
     @DisplayName("key is null")
     @ExpectSystemExitWithStatus(-1)
-    void getAsURL_keyIsNull() throws Exception {
+    void getAsURL_keyIsNull() {
         Setting.init(propertiesPath);
         Setting.getAsURL("undefined key");
     }
@@ -539,7 +539,7 @@ class SettingTest {
     @Test
     @DisplayName("type missing")
     @ExpectSystemExitWithStatus(-1)
-    void getAsURL_typeMissing() throws Exception {
+    void getAsURL_typeMissing() {
         Setting.init(propertiesPath);
         Setting.getAsURL("decimal_like");
     }
@@ -549,7 +549,7 @@ class SettingTest {
      */
     @Test
     @DisplayName("type missing")
-    void getAsURL_success() throws Exception {
+    void getAsURL_success() {
         Setting.init(propertiesPath);
         assertThat("how assert???")
                 .isEqualTo("");
@@ -560,27 +560,27 @@ class SettingTest {
      */
     @Test
     @DisplayName("get all to string success")
-    void getAllToString_success() throws Exception {
+    void getAllToString_success() {
         Setting.init(propertiesPath_forGetAll);
         assertThat(Setting.getAllToString())
                 .isEqualTo(
-                    "■ [false_value] :   false" + "\r\n" +
-                    "■ [debug_mode] :   true" + "\r\n" +
-                    "■ [long_key_name_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa] :   long_key_name" + "\r\n" +
-                    "■ [windows_path_like] :   C:\\develop\\language-detection\\profiles" + "\r\n" +
-                    "■ [regexp_like] :   ^[A-X]\\s*(B|C)" + "\r\n" +
-                    "■ [false] :   false" + "\r\n" +
-                    "■ [true_value] :   true" + "\r\n" +
-                    "■ [decimal_like] :   .000312425" + "\r\n" +
-                    "■ [double_like] :   10.0" + "\r\n" +
-                    "■ [double_like_detail] :   10.019834u582" + "\r\n" +
-                    "■ [unix_path_like] :   /develop/language-detection/profiles" + "\r\n" +
-                    "■ [symbols] :   )('&%$#\"!{}_?*`P+><./\\:][\\^-" + "\r\n" +
-                    "■ [url_like] :   https://dummy.com/url_like/hoge?param=p" + "\r\n" +
-                    "■ [integer_like] :   10" + "\r\n" +
-                    "■ [true] :   true" + "\r\n" +
-                    "■ [version_like] :   1.20.1.1" + "\r\n" +
-                    "■ [non_value] :   " + "\r\n"
+                        "■ [false_value] :   false" + "\r\n" +
+                                "■ [debug_mode] :   true" + "\r\n" +
+                                "■ [long_key_name_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa] :   long_key_name" + "\r\n" +
+                                "■ [windows_path_like] :   C:\\develop\\language-detection\\profiles" + "\r\n" +
+                                "■ [regexp_like] :   ^[A-X]\\s*(B|C)" + "\r\n" +
+                                "■ [false] :   false" + "\r\n" +
+                                "■ [true_value] :   true" + "\r\n" +
+                                "■ [decimal_like] :   .000312425" + "\r\n" +
+                                "■ [double_like] :   10.0" + "\r\n" +
+                                "■ [double_like_detail] :   10.019834u582" + "\r\n" +
+                                "■ [unix_path_like] :   /develop/language-detection/profiles" + "\r\n" +
+                                "■ [symbols] :   )('&%$#\"!{}_?*`P+><./\\:][\\^-" + "\r\n" +
+                                "■ [url_like] :   https://dummy.com/url_like/hoge?param=p" + "\r\n" +
+                                "■ [integer_like] :   10" + "\r\n" +
+                                "■ [true] :   true" + "\r\n" +
+                                "■ [version_like] :   1.20.1.1" + "\r\n" +
+                                "■ [non_value] :   " + "\r\n"
                 );
     }
 
