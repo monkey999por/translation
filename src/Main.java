@@ -29,7 +29,7 @@ public class Main {
         System.out.println("@see: https://github.com/monkey999por/language-detection.git");
         System.out.println();
         System.out.println("■ Setting: " + Setting.getFilePath());
-        Setting.printAll();
+        System.out.println(Setting.getAllToString());
         System.out.println();
         System.out.println("■■■機能■■■");
         System.out.println("  ・クリップボードを監視し、変更があった場合は翻訳します。");

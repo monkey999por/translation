@@ -58,7 +58,7 @@ public class MyTextToSpeechClient {
      * playback text to speech.
      * audio file created {@link MyTextToSpeechClient#request(String)}.
      *
-     * @throws JavaLayerException see {@link FactoryRegistry#createAudioDevice()}
+     * @throws JavaLayerException    see {@link FactoryRegistry#createAudioDevice()}
      * @throws FileNotFoundException see {@link FileInputStream#FileInputStream(File)}
      */
     public static void playback() throws JavaLayerException, FileNotFoundException {
