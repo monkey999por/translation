@@ -48,7 +48,8 @@ public class RefMethod {
     /**
      * usage<br>
      * ・example method definition "execute(String arg)"<br>
-     * :: execute("arg") -> invoke(new Object[]{"arg"})<br>
+     * 1. execute("arg") -> invoke(new Object[]{"arg"})<br>
+     * 2. execute("arg") -> invoke("arg")<br>
      * <p>
      * wrap {@link Method#invoke(Object, Object...)}
      *

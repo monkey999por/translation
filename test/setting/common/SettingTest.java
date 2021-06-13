@@ -192,7 +192,7 @@ class SettingTest {
     @Test
     @DisplayName("no error")
     void isBlankKey_noError() throws Exception {
-        this.isBlankKey.invoke(new Object[]{"no error"});
+        this.isBlankKey.invoke("no error");
     }
 
     /**
@@ -214,7 +214,7 @@ class SettingTest {
     @DisplayName("key is blank")
     @ExpectSystemExitWithStatus(-1)
     void isBlankKey_keyIsBlank() throws Exception {
-        this.isBlankKey.invoke(new Object[]{""});
+        this.isBlankKey.invoke("");
     }
 
     /**
@@ -225,7 +225,7 @@ class SettingTest {
     @DisplayName("key is blank")
     @ExpectSystemExitWithStatus(-1)
     void likeNumber_keyIsBlank() throws Exception {
-        this.likeNumber.invoke(new Object[]{"", "value"});
+        this.likeNumber.invoke("", "value");
     }
 
     /**
@@ -236,7 +236,7 @@ class SettingTest {
     @DisplayName("not number")
     @ExpectSystemExitWithStatus(-1)
     void likeNumber_notNumber() throws Exception {
-        this.likeNumber.invoke(new Object[]{"not number", "value"});
+        this.likeNumber.invoke("not number", "value");
     }
 
     /**
@@ -247,18 +247,18 @@ class SettingTest {
     @DisplayName("param is number like. expect no error")
     void likeNumber_numberLike() throws Exception {
         // comment auto is error pattern
-        this.likeNumber.invoke(new Object[]{"int", "10"});
-        this.likeNumber.invoke(new Object[]{"double", "10.1235"});
-        this.likeNumber.invoke(new Object[]{"decimal", "0.00000002365478799"});
-        this.likeNumber.invoke(new Object[]{"pre0", "0123"});
-        this.likeNumber.invoke(new Object[]{"start with dot", ".32"});
-        this.likeNumber.invoke(new Object[]{"start with -", "-8888"});
+        this.likeNumber.invoke("int", "10");
+        this.likeNumber.invoke("double", "10.1235");
+        this.likeNumber.invoke("decimal", "0.00000002365478799");
+        this.likeNumber.invoke("pre0", "0123");
+        this.likeNumber.invoke("start with dot", ".32");
+        this.likeNumber.invoke("start with -", "-8888");
 //        this.likeNumber.invoke(new Object[]{"start with +", "+5689"});
 //        this.likeNumber.invoke(new Object[]{"contain half-space start end", " 45 "});
 //        this.likeNumber.invoke(new Object[]{"contain half-space middle", "4 6"});
 //        this.likeNumber.invoke(new Object[]{"start with tab code", "\t99"});
 //        this.likeNumber.invoke(new Object[]{"contains comma", "1,234,568"});
-        this.likeNumber.invoke(new Object[]{"contains E", "1.234E+02"});
+        this.likeNumber.invoke("contains E", "1.234E+02");
 //        this.likeNumber.invoke(new Object[]{"contains Napier", "1.234-e"});
 //        this.likeNumber.invoke(new Object[]{"Napier", "E"});
 //        this.likeNumber.invoke(new Object[]{"contains full-space start end", "　12　"});
@@ -275,7 +275,7 @@ class SettingTest {
     @DisplayName("key is empty")
     @ExpectSystemExitWithStatus(-1)
     void likeBoolean_keyIsEmpty() throws Exception {
-        this.likeBoolean.invoke(new Object[]{"", "value"});
+        this.likeBoolean.invoke("", "value");
     }
 
     /**
@@ -286,7 +286,7 @@ class SettingTest {
     @DisplayName("not boolean like")
     @ExpectSystemExitWithStatus(-1)
     void likeBoolean_notBoolean() throws Exception {
-        this.likeBoolean.invoke(new Object[]{"key", "tree"});
+        this.likeBoolean.invoke("key", "tree");
     }
 
     /**
@@ -297,8 +297,8 @@ class SettingTest {
     @DisplayName("boolean like")
     void likeBoolean_booleanLike() throws Exception {
         // arrowed pattern
-        this.likeBoolean.invoke(new Object[]{"lower case true", "true"});
-        this.likeBoolean.invoke(new Object[]{"lower case false", "false"});
+        this.likeBoolean.invoke("lower case true", "true");
+        this.likeBoolean.invoke("lower case false", "false");
 //        this.likeBoolean.invoke(new Object[]{"upper case true", "TRUE"});
 //        this.likeBoolean.invoke(new Object[]{"upper case false", "FALSE"});
 //        this.likeBoolean.invoke(new Object[]{"start with Upper true", "True"});
