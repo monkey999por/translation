@@ -22,7 +22,7 @@ public class LangDetector {
      * init.
      *
      * @param profileDirectory {@link DetectorFactory#loadProfile(String)}
-     * @throws LangDetectException
+     * @throws LangDetectException see {@link DetectorFactory#loadProfile(String)}
      */
     private static synchronized void init(String profileDirectory) throws LangDetectException {
         if (!isInit) {
@@ -34,7 +34,7 @@ public class LangDetector {
     /**
      * init lang detector.
      *
-     * @throws LangDetectException
+     * @throws LangDetectException see {@link #init(String)}
      */
     private static void init() throws LangDetectException {
         init(Setting.getAsString("lang_detector_profile"));
@@ -45,7 +45,7 @@ public class LangDetector {
      *
      * @param text detect target.
      * @return {@link Detector#detect()}
-     * @throws LangDetectException
+     * @throws LangDetectException see {@link #init()}
      */
     public static String detect(String text) throws LangDetectException {
         init();
@@ -59,7 +59,7 @@ public class LangDetector {
      *
      * @param text detect target.
      * @return {@link Detector#getProbabilities()}
-     * @throws LangDetectException
+     * @throws LangDetectException see {@link #init()}
      */
     public static ArrayList<Language> detectLang(String text) throws LangDetectException {
         init();
@@ -71,7 +71,7 @@ public class LangDetector {
     /**
      * @param text detect args text language.
      * @return is japanese ?
-     * @throws LangDetectException
+     * @throws LangDetectException see {@link #init()}
      */
     public static Boolean isJapanese(String text) throws LangDetectException {
         init();

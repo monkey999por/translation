@@ -6,6 +6,7 @@ import javazoom.jl.player.FactoryRegistry;
 import javazoom.jl.player.advanced.AdvancedPlayer;
 import setting.common.Setting;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -57,8 +58,8 @@ public class MyTextToSpeechClient {
      * playback text to speech.
      * audio file created {@link MyTextToSpeechClient#request(String)}.
      *
-     * @throws JavaLayerException
-     * @throws FileNotFoundException
+     * @throws JavaLayerException see {@link FactoryRegistry#createAudioDevice()}
+     * @throws FileNotFoundException see {@link FileInputStream#FileInputStream(File)}
      */
     public static void playback() throws JavaLayerException, FileNotFoundException {
         var audioFile = new FileInputStream(
