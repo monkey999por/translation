@@ -185,7 +185,7 @@ public class Setting {
             return new URL(get(key));
         } catch (MalformedURLException e) {
             ApplicationFailure("key: " + key + "\r\n\r\n" +
-                    e.toString());
+                    e);
         }
         return null;
     }
