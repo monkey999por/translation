@@ -11,7 +11,6 @@ import setting.translate.TargetLanguage;
 
 import java.util.Arrays;
 
-import static org.assertj.core.api.Assertions.anyOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mockStatic;
@@ -131,11 +130,11 @@ class TranslationClientTest {
     @DisplayName("method \"request\" call subroutine")
     void request_callNext() {
         try (var mockCmd = mockStatic(Cmd.class)) {
-            mockCmd.when(()-> Cmd.execute(anyBoolean(), any()))
+            mockCmd.when(() -> Cmd.execute(anyBoolean(), any()))
                     .thenAnswer(invocationOnMock -> {
                         var paramAll = new StringBuffer();
                         paramAll.append(invocationOnMock.getArgument(0).toString()).append(" : ");
-                        Arrays.stream((String[])invocationOnMock.getArgument(1))
+                        Arrays.stream((String[]) invocationOnMock.getArgument(1))
                                 .forEach(o -> {
                                     paramAll.append(o.toString()).append(" : ");
                                 });
@@ -148,7 +147,6 @@ class TranslationClientTest {
 
         }
     }
-
 
 
     /**
