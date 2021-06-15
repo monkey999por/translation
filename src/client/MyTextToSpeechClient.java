@@ -57,6 +57,7 @@ public class MyTextToSpeechClient {
     /**
      * playback text to speech.
      * audio file created {@link MyTextToSpeechClient#request(String)}.
+     * audio file path : setting.properties#"google_cloud_text_to_speech_out_audio_file"
      *
      * @throws JavaLayerException    see {@link FactoryRegistry#createAudioDevice()}
      * @throws FileNotFoundException see {@link FileInputStream#FileInputStream(File)}
