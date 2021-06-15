@@ -3,7 +3,7 @@ package worker;
 import client.MyTextToSpeechClient;
 import client.TranslationClient;
 import com.cybozu.labs.langdetect.LangDetectException;
-import common.LangDetector;
+import common.internal.LangDetector;
 import setting.common.Setting;
 
 import java.util.concurrent.Callable;

@@ -1,6 +1,6 @@
 package worker;
 
-import common.Cmd;
+import common.external.Cmd;
 import setting.common.Setting;
 
 /**

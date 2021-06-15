@@ -1,4 +1,4 @@
-package common;
+package common.external;
 
 import setting.common.Setting;
 

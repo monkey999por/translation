@@ -1,4 +1,4 @@
-package common;
+package common.internal;
 
 import com.cybozu.labs.langdetect.Detector;
 import com.cybozu.labs.langdetect.DetectorFactory;

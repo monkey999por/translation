@@ -1,8 +1,8 @@
 package client;
 
 import com.cybozu.labs.langdetect.LangDetectException;
-import common.Cmd;
-import common.LangDetector;
+import common.external.Cmd;
+import common.internal.LangDetector;
 import org.apache.commons.codec.net.URLCodec;
 import setting.common.Setting;
 import setting.translate.TargetLanguage;

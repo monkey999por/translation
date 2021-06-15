@@ -1,4 +1,4 @@
-package common;
+package common.external;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;

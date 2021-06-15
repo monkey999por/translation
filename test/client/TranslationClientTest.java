@@ -1,8 +1,8 @@
 package client;
 
 import com.cybozu.labs.langdetect.LangDetectException;
-import common.Cmd;
-import common.LangDetector;
+import common.external.Cmd;
+import common.internal.LangDetector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
