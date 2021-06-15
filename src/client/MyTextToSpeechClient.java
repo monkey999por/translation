@@ -63,7 +63,7 @@ public class MyTextToSpeechClient {
      */
     public static void playback() throws JavaLayerException, FileNotFoundException {
         var audioFile = new FileInputStream(
-                Setting.getAsFile("google_cloud_text_to_speech_out_audio_file"));
+                Setting.getAsString("google_cloud_text_to_speech_out_audio_file"));
         var audioDevice = FactoryRegistry.systemRegistry().createAudioDevice();
         var player = new AdvancedPlayer(audioFile, audioDevice);
         player.play();

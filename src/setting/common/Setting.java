@@ -190,37 +190,6 @@ public class Setting {
     }
 
     /**
-     * @param key same as {@link Setting#get(String)}
-     * @return setting type of convert to this type.
-     * @see Setting#get(String)
-     */
-    @NotNull
-    public static File getAsFile(String key) {
-        try {
-            return new File(get(key));
-        } catch (Exception e) {
-            ApplicationFailure("key: " + key + "\r\n\r\n" + e);
-            // dummy. unreachable code
-            return new File("dummy");
-        }
-    }
-
-    /**
-     * @param key same as {@link Setting#get(String)}
-     * @return setting type of convert to this type.
-     * @see Setting#get(String)
-     */
-    public static URL getAsURL(String key) {
-        try {
-            return new URL(get(key));
-        } catch (MalformedURLException e) {
-            ApplicationFailure("key: " + key + "\r\n\r\n" + e);
-            // dummy. unreachable code
-            return null;
-        }
-    }
-
-    /**
      * checking param is number??
      *
      * @param value checking target.
