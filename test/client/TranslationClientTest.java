@@ -1,13 +1,14 @@
 package client;
 
+import app.Setting;
 import com.cybozu.labs.langdetect.LangDetectException;
-import common.external.Cmd;
-import common.internal.LangDetector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import setting.common.Setting;
-import setting.translate.TargetLanguage;
+import tools.external.Cmd;
+import translate.LangDetector;
+import translate.TargetLanguage;
+import translate.TranslationClient;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package setting.translate;
+package translate;
 
 /**
  * target of translation language code.

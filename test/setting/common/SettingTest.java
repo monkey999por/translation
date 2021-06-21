@@ -1,5 +1,6 @@
 package setting.common;
 
+import app.Setting;
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

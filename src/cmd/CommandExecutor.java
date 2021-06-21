@@ -1,7 +1,7 @@
-package worker;
+package cmd;
 
-import common.external.Cmd;
-import setting.common.Setting;
+import app.Setting;
+import tools.external.Cmd;
 
 /**
  * any command execute by this.
@@ -44,5 +44,25 @@ public class CommandExecutor {
             default:
                 return false;
         }
+    }
+
+    /**
+     * judge is args command. what is command ??
+     * - args started in command_prefix?
+     *
+     * @param str str
+     * @return this is command?
+     */
+    public static boolean isCommand(String str) {
+        var chars = str.toCharArray();
+        var prefix = Setting.getAsString("command_prefix").toCharArray()[0];
+        for (var aChar : chars) {
+            if (aChar == ' ') {
+                continue;
+            } else {
+                return aChar == prefix;
+            }
+        }
+        return false;
     }
 }

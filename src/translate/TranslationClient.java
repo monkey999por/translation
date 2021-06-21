@@ -1,11 +1,9 @@
-package client;
+package translate;
 
+import app.Setting;
 import com.cybozu.labs.langdetect.LangDetectException;
-import common.external.Cmd;
-import common.internal.LangDetector;
 import org.apache.commons.codec.net.URLCodec;
-import setting.common.Setting;
-import setting.translate.TargetLanguage;
+import tools.external.Cmd;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Objects;

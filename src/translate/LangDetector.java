@@ -1,10 +1,10 @@
-package common.internal;
+package translate;
 
+import app.Setting;
 import com.cybozu.labs.langdetect.Detector;
 import com.cybozu.labs.langdetect.DetectorFactory;
 import com.cybozu.labs.langdetect.LangDetectException;
 import com.cybozu.labs.langdetect.Language;
-import setting.common.Setting;
 
 import java.util.ArrayList;
 

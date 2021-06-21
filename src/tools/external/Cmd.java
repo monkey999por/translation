@@ -1,6 +1,6 @@
-package common.external;
+package tools.external;
 
-import setting.common.Setting;
+import app.Setting;
 
 import java.io.BufferedReader;
 import java.io.IOException;

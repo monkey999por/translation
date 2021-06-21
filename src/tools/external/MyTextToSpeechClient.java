@@ -1,10 +1,10 @@
-package client;
+package tools.external;
 
+import app.Setting;
 import com.google.cloud.texttospeech.v1.*;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.FactoryRegistry;
 import javazoom.jl.player.advanced.AdvancedPlayer;
-import setting.common.Setting;
 
 import java.io.File;
 import java.io.FileInputStream;
