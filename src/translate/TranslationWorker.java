@@ -2,7 +2,7 @@ package translate;
 
 import app.Setting;
 import com.cybozu.labs.langdetect.LangDetectException;
-import tools.external.MyTextToSpeechClient;
+import tools.MyTextToSpeechClient;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;

@@ -1,4 +1,4 @@
-package tools.external;
+package tools;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;

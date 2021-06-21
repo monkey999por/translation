@@ -1,8 +1,7 @@
-package client;
+package tools;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import tools.external.MyTextToSpeechClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,7 +1,7 @@
 package thread;
 
 import app.Setting;
-import tools.external.MyClipBoard;
+import tools.MyClipBoard;
 import translate.TranslationWorker;
 
 /**

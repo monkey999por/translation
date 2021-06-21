@@ -3,7 +3,7 @@ package translate;
 import app.Setting;
 import com.cybozu.labs.langdetect.LangDetectException;
 import org.apache.commons.codec.net.URLCodec;
-import tools.external.Cmd;
+import tools.Cmd;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Objects;

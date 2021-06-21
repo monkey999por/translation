@@ -1,7 +1,7 @@
 package cmd;
 
 import app.Setting;
-import tools.external.Cmd;
+import tools.Cmd;
 
 /**
  * any command execute by this.
