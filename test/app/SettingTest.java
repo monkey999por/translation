@@ -1,4 +1,4 @@
-package setting.common;
+package app;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 import org.junit.jupiter.api.BeforeEach;

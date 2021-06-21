@@ -1,4 +1,0 @@
-/**
- * client.
- */
-package client;

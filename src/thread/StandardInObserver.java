@@ -1,9 +1,8 @@
 package thread;
 
-import setting.common.Setting;
-import worker.TaskMediator;
-import worker.TaskType;
-import worker.TextParser;
+import app.Setting;
+import cmd.CommandExecutor;
+import translate.TranslationWorker;
 
 import java.util.Scanner;
 
@@ -23,10 +22,10 @@ public class StandardInObserver implements Runnable {
         try (Scanner scanner = new Scanner(System.in, Setting.getAsString("standard_in_encoding"))) {
             while (true) {
                 var input = scanner.nextLine();
-                if (TextParser.isCommand(input)) {
-                    TaskMediator.order(TaskType.COMMAND, input);
+                if (CommandExecutor.isCommand(input)) {
+                    CommandExecutor.run(input);
                 } else {
-                    TaskMediator.order(TaskType.TRANSLATE, input);
+                    TranslationWorker.run(input);
                 }
 
             }
