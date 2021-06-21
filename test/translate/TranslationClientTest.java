@@ -1,13 +1,11 @@
-package client;
+package translate;
 
+import app.Setting;
 import com.cybozu.labs.langdetect.LangDetectException;
-import common.external.Cmd;
-import common.internal.LangDetector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import setting.common.Setting;
-import setting.translate.TargetLanguage;
+import tools.Cmd;
 
 import java.util.Arrays;
 
@@ -22,7 +20,7 @@ import static org.mockito.Mockito.mockStatic;
 class TranslationClientTest {
 
     /**
-     * @see TranslationClient#createRequestUrl(String, TargetLanguage, TargetLanguage)
+     * @see TranslationClient#createRequestUrl(String, TargetLang, TargetLang)
      */
     @Test
     @DisplayName("param japanese. the first args encoded.")
@@ -32,14 +30,14 @@ class TranslationClientTest {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
             mockSetting.when(() -> Setting.getAsString(Mockito.anyString())).thenReturn(baseUrl);
 
-            assertThat(TranslationClient.createRequestUrl("あいうえお", TargetLanguage.JAPANESE, TargetLanguage.ENGLISH))
+            assertThat(TranslationClient.createRequestUrl("あいうえお", TargetLang.JAPANESE, TargetLang.ENGLISH))
                     .isNotNull()
                     .isEqualTo("https://dummy?text=\\\"%E3%81%82%E3%81%84%E3%81%86%E3%81%88%E3%81%8A\\\"&source=ja&target=en");
         }
     }
 
     /**
-     * @see TranslationClient#createRequestUrl(String, TargetLanguage, TargetLanguage)
+     * @see TranslationClient#createRequestUrl(String, TargetLang, TargetLang)
      */
     @Test
     @DisplayName("param alphabet")
@@ -49,14 +47,14 @@ class TranslationClientTest {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
             mockSetting.when(() -> Setting.getAsString(Mockito.anyString())).thenReturn(baseUrl);
 
-            assertThat(TranslationClient.createRequestUrl("hello", TargetLanguage.ENGLISH, TargetLanguage.JAPANESE))
+            assertThat(TranslationClient.createRequestUrl("hello", TargetLang.ENGLISH, TargetLang.JAPANESE))
                     .isNotNull()
                     .isEqualTo("https://dummy?text=\\\"hello\\\"&source=en&target=ja");
         }
     }
 
     /**
-     * @see TranslationClient#createRequestUrl(String, TargetLanguage, TargetLanguage)
+     * @see TranslationClient#createRequestUrl(String, TargetLang, TargetLang)
      */
     @Test
     @DisplayName("including half-width space before and after, and middle")
@@ -66,14 +64,14 @@ class TranslationClientTest {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
             mockSetting.when(() -> Setting.getAsString(Mockito.anyString())).thenReturn(baseUrl);
 
-            assertThat(TranslationClient.createRequestUrl(" hello world ", TargetLanguage.JAPANESE, TargetLanguage.ENGLISH))
+            assertThat(TranslationClient.createRequestUrl(" hello world ", TargetLang.JAPANESE, TargetLang.ENGLISH))
                     .isNotNull()
                     .isEqualTo("https://dummy?text=\\\"+hello+world+\\\"&source=ja&target=en");
         }
     }
 
     /**
-     * @see TranslationClient#createRequestUrl(String, TargetLanguage, TargetLanguage)
+     * @see TranslationClient#createRequestUrl(String, TargetLang, TargetLang)
      */
     @Test
     @DisplayName("including Full-width space before and after, and middle")
@@ -83,14 +81,14 @@ class TranslationClientTest {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
             mockSetting.when(() -> Setting.getAsString(Mockito.anyString())).thenReturn(baseUrl);
 
-            assertThat(TranslationClient.createRequestUrl("　hello　world　", TargetLanguage.JAPANESE, TargetLanguage.ENGLISH))
+            assertThat(TranslationClient.createRequestUrl("　hello　world　", TargetLang.JAPANESE, TargetLang.ENGLISH))
                     .isNotNull()
                     .isEqualTo("https://dummy?text=\\\"%E3%80%80hello%E3%80%80world%E3%80%80\\\"&source=ja&target=en");
         }
     }
 
     /**
-     * @see TranslationClient#createRequestUrl(String, TargetLanguage, TargetLanguage)
+     * @see TranslationClient#createRequestUrl(String, TargetLang, TargetLang)
      */
     @Test
     @DisplayName("including anything(symbol, number, newline code, like regexp, ..other)")
@@ -100,14 +98,14 @@ class TranslationClientTest {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
             mockSetting.when(() -> Setting.getAsString(Mockito.anyString())).thenReturn(baseUrl);
 
-            assertThat(TranslationClient.createRequestUrl("12345;^[A-Z]+-*/\\あいう)('&%$#\"!@`*+:/.,。、", TargetLanguage.JAPANESE, TargetLanguage.ENGLISH))
+            assertThat(TranslationClient.createRequestUrl("12345;^[A-Z]+-*/\\あいう)('&%$#\"!@`*+:/.,。、", TargetLang.JAPANESE, TargetLang.ENGLISH))
                     .isNotNull()
                     .isEqualTo("https://dummy?text=\\\"12345%3B%5E%5BA-Z%5D%2B-*%2F%5C%E3%81%82%E3%81%84%E3%81%86%29%28%27%26%25%24%23%22%21%40%60*%2B%3A%2F.%2C%E3%80%82%E3%80%81\\\"&source=ja&target=en");
         }
     }
 
     /**
-     * @see TranslationClient#createRequestUrl(String, TargetLanguage, TargetLanguage)
+     * @see TranslationClient#createRequestUrl(String, TargetLang, TargetLang)
      */
     @Test
     @DisplayName("including null")
@@ -117,7 +115,7 @@ class TranslationClientTest {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
             mockSetting.when(() -> Setting.getAsString(Mockito.anyString())).thenReturn(baseUrl);
 
-            assertThat(TranslationClient.createRequestUrl(null, TargetLanguage.JAPANESE, TargetLanguage.ENGLISH))
+            assertThat(TranslationClient.createRequestUrl(null, TargetLang.JAPANESE, TargetLang.ENGLISH))
                     .isNotNull()
                     .isEqualTo("https://dummy?text=\\\"\\\"&source=ja&target=en");
         }
@@ -155,10 +153,10 @@ class TranslationClientTest {
     @Test
     @DisplayName("convert param and call next inner method")
     void translate_convertParamAndCallNextMethod() throws LangDetectException {
-        try (var langDetector = mockStatic(LangDetector.class);
+        try (var langDetector = mockStatic(LangDetectorOfCybozuLabs.class);
              var client = mockStatic(TranslationClient.class)
         ) {
-            langDetector.when(() -> LangDetector.isJapanese(anyString()))
+            langDetector.when(() -> LangDetectorOfCybozuLabs.isJapanese(anyString()))
                     .thenReturn(true);
             // this is mock. called by TranslationClient#translate
             client.when(() -> TranslationClient.createRequestUrl(anyString(), any(), any()))
@@ -186,10 +184,10 @@ class TranslationClientTest {
     @Test
     @DisplayName("convert param and call next inner method2")
     void translate_convertParamAndCallNextMethod_2() throws LangDetectException {
-        try (var langDetector = mockStatic(LangDetector.class);
+        try (var langDetector = mockStatic(LangDetectorOfCybozuLabs.class);
              var client = mockStatic(TranslationClient.class)
         ) {
-            langDetector.when(() -> LangDetector.isJapanese(anyString()))
+            langDetector.when(() -> LangDetectorOfCybozuLabs.isJapanese(anyString()))
                     .thenReturn(false);
             // this is mock. called by TranslationClient#translate
             client.when(() -> TranslationClient.createRequestUrl(anyString(), any(), any()))
@@ -217,10 +215,10 @@ class TranslationClientTest {
     @Test
     @DisplayName("param is null")
     void translate_paramIsNull() throws LangDetectException {
-        try (var langDetector = mockStatic(LangDetector.class);
+        try (var langDetector = mockStatic(LangDetectorOfCybozuLabs.class);
              var client = mockStatic(TranslationClient.class)
         ) {
-            langDetector.when(() -> LangDetector.isJapanese(anyString()))
+            langDetector.when(() -> LangDetectorOfCybozuLabs.isJapanese(anyString()))
                     .thenAnswer(invocationOnMock -> {
                         return invocationOnMock.getArgument(0).equals("");
                     });

@@ -1,4 +1,4 @@
-package setting.translate;
+package translate;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -6,27 +6,27 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * @see TargetLanguage
+ * @see TargetLang
  */
-class TargetLanguageTest {
+class TargetLangTest {
 
     /**
-     * @see TargetLanguage#getLanguageCode()
+     * @see TargetLang#getLanguageCode()
      */
     @Test
     @DisplayName("init JAPANESE and get value")
     void initAndGetCode_ja() {
-        assertThat(TargetLanguage.JAPANESE.getLanguageCode())
+        assertThat(TargetLang.JAPANESE.languageCode)
                 .isEqualTo("ja");
     }
 
     /**
-     * @see TargetLanguage#getLanguageCode()
+     * @see TargetLang#getLanguageCode()
      */
     @Test
     @DisplayName("init ENGLISH and get value")
     void initAndGetCode_en() {
-        assertThat(TargetLanguage.ENGLISH.getLanguageCode())
+        assertThat(TargetLang.ENGLISH.languageCode)
                 .isEqualTo("en");
     }
 }

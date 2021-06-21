@@ -1,4 +1,4 @@
-import setting.common.Setting;
+import app.Setting;
 import thread.ClipBoardObserver;
 import thread.StandardInObserver;
 

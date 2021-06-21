@@ -1,10 +1,8 @@
-package worker;
+package translate;
 
-import client.MyTextToSpeechClient;
-import client.TranslationClient;
+import app.Setting;
 import com.cybozu.labs.langdetect.LangDetectException;
-import common.internal.LangDetector;
-import setting.common.Setting;
+import tools.MyTextToSpeechClient;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
@@ -54,7 +52,7 @@ public class TranslationWorker {
                 try {
                     // text to speech request
                     MyTextToSpeechClient.request(
-                            LangDetector.isJapanese(translationText) ? translationResult.get() : translationText);
+                            LangDetectorOfCybozuLabs.isJapanese(translationText) ? translationResult.get() : translationText);
 
                     //  play back text to speech result(mp3)
                     // see -> setting : "google_cloud_text_to_speech_out_audio_file"

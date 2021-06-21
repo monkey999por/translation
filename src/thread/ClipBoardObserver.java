@@ -1,9 +1,8 @@
 package thread;
 
-import common.external.MyClipBoard;
-import setting.common.Setting;
-import worker.TaskMediator;
-import worker.TaskType;
+import app.Setting;
+import tools.MyClipBoard;
+import translate.TranslationWorker;
 
 /**
  * Monitor System clipboard.
@@ -45,7 +44,7 @@ public class ClipBoardObserver implements Runnable {
 
             // translation worker run
             var ct = MyClipBoard.getText();
-            TaskMediator.order(TaskType.TRANSLATE, ct);
+            TranslationWorker.run(ct);
             lastTimeClipText = ct;
         }
     }

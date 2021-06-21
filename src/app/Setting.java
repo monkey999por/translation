@@ -1,13 +1,11 @@
-package setting.common;
+package app;
 
+import cmd.CommandExecutor;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.jetbrains.annotations.NotNull;
-import worker.CommandExecutor;
+import thread.StandardInObserver;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -46,7 +44,7 @@ public class Setting {
 
     /**
      * if you edit properties when application running , after the call this method .
-     * How call? see {@link thread.StandardInObserver} and {@link CommandExecutor}
+     * How call? see {@link StandardInObserver} and {@link CommandExecutor}
      */
     public static void reLoad() {
         load(filePath);

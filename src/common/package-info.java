@@ -1,4 +1,0 @@
-/**
- * application common
- */
-package common;

@@ -1,11 +1,9 @@
-package client;
+package translate;
 
+import app.Setting;
 import com.cybozu.labs.langdetect.LangDetectException;
-import common.external.Cmd;
-import common.internal.LangDetector;
 import org.apache.commons.codec.net.URLCodec;
-import setting.common.Setting;
-import setting.translate.TargetLanguage;
+import tools.Cmd;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Objects;
@@ -16,6 +14,11 @@ import java.util.Objects;
 public class TranslationClient {
     private static final URLCodec codec = new URLCodec("UTF-8");
 
+    private LangDetector detector = new LangDetectorOfCybozuLabs();
+
+    public TranslationClient() throws LangDetectException {
+    }
+
     /**
      * create request URL as google apps script as "google_translate_api".
      *
@@ -24,7 +27,7 @@ public class TranslationClient {
      * @param target after language
      * @return request URL as google apps script as "google_translate_api"
      */
-    public static String createRequestUrl(String text, TargetLanguage source, TargetLanguage target) {
+    public static String createRequestUrl(String text, TargetLang source, TargetLang target) {
         try {
             text = Objects.isNull(text) ? "" : codec.encode(text, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -35,14 +38,14 @@ public class TranslationClient {
 
         String url = Setting.getAsString("translate_request_url");
         return url.replace("{text}", text)
-                .replace("{source}", source.getLanguageCode())
-                .replace("{target}", target.getLanguageCode());
+                .replace("{source}", source.languageCode)
+                .replace("{target}", target.languageCode);
     }
 
     /**
      * translate by URL.
      *
-     * @param requestUrl created by {@link TranslationClient#createRequestUrl(String, TargetLanguage, TargetLanguage)}.
+     * @param requestUrl created by {@link TranslationClient#createRequestUrl(String, TargetLang, TargetLang)}.
      * @return translate result.
      */
     public static String request(String requestUrl) {
@@ -56,13 +59,13 @@ public class TranslationClient {
      *
      * @param text translate text.
      * @return translate result.
-     * @throws LangDetectException see {@link LangDetector#isJapanese(String)}
+     * @throws LangDetectException see {@link LangDetectorOfCybozuLabs#isJapanese(String)}
      */
     public static String translate(String text) throws LangDetectException {
         text = Objects.isNull(text) ? "" : text;
-        String requestUrl = LangDetector.isJapanese(text)
-                ? createRequestUrl(text, TargetLanguage.JAPANESE, TargetLanguage.ENGLISH)
-                : createRequestUrl(text, TargetLanguage.ENGLISH, TargetLanguage.JAPANESE);
+        String requestUrl = detector.isJapanese(text)
+                ? createRequestUrl(text, TargetLang.JAPANESE, TargetLang.ENGLISH)
+                : createRequestUrl(text, TargetLang.ENGLISH, TargetLang.JAPANESE);
 
         return request(requestUrl);
     }
