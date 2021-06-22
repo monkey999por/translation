@@ -10,7 +10,7 @@ public interface LangDetector {
      *
      * @param text detect target.
      */
-    public TargetLang detect(String text) throws Exception;
+    public TargetLang detect(String text);
 
     /**
      * detect args text language.
@@ -18,11 +18,11 @@ public interface LangDetector {
      * @param text detect target.
      * @return {@link Detector#getProbabilities()}
      */
-    public ArrayList<TargetLang> detects(String text) throws Exception;
+    public ArrayList<TargetLang> detects(String text);
 
     /**
      * @param text detect args text language.
      * @return is japanese ?
      */
-    public Boolean isJapanese(String text) throws Exception;
+    public Boolean isJapanese(String text);
 }

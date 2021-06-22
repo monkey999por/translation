@@ -1,6 +1,7 @@
 import app.Setting;
 import thread.ClipBoardObserver;
 import thread.StandardInObserver;
+import translate.TargetLang;
 
 /**
  * see sequence.drawio

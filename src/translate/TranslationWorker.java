@@ -12,6 +12,9 @@ import java.util.concurrent.Executors;
  */
 public class TranslationWorker {
 
+    LangDetector detector = new LangDetectorOfCybozuLabs();
+    TranslationClientOfGoogleAppScript client = new TranslationClientOfGoogleAppScript();
+
     public TranslationWorker() {
 
     }
@@ -23,14 +26,14 @@ public class TranslationWorker {
      *
      * @param translationText text as translate
      */
-    public static void run(String translationText) {
+    public void run(String translationText) {
         // translate clipboard text
         var translation = new Callable<String>() {
             @Override
             public String call() throws LangDetectException {
                 System.out.println("---------------------------------------------------------");
                 System.out.println("■ from -> : " + translationText);
-                var result = TranslationClient.translate(translationText);
+                var result = client.translate(translationText);
                 // translate result to console
                 System.out.println("■ to   -> : " + result);
                 System.out.println();
@@ -52,7 +55,7 @@ public class TranslationWorker {
                 try {
                     // text to speech request
                     MyTextToSpeechClient.request(
-                            LangDetectorOfCybozuLabs.isJapanese(translationText) ? translationResult.get() : translationText);
+                            detector.isJapanese(translationText) ? translationResult.get() : translationText);
 
                     //  play back text to speech result(mp3)
                     // see -> setting : "google_cloud_text_to_speech_out_audio_file"

@@ -12,6 +12,8 @@ public class ClipBoardObserver implements Runnable {
     //前回のクリップボードの内容を保持する
     private static String lastTimeClipText = MyClipBoard.getText() == null ? "" : MyClipBoard.getText();
 
+    TranslationWorker worker = new TranslationWorker();
+
     public ClipBoardObserver() {
     }
 
@@ -44,7 +46,7 @@ public class ClipBoardObserver implements Runnable {
 
             // translation worker run
             var ct = MyClipBoard.getText();
-            TranslationWorker.run(ct);
+            worker.run(ct);
             lastTimeClipText = ct;
         }
     }
