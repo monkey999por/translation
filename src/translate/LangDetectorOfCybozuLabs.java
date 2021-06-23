@@ -94,7 +94,7 @@ public class LangDetectorOfCybozuLabs implements LangDetector {
      * @throws LangDetectException see {@link DetectorFactory#create()}
      */
     @Override
-    public Boolean isJapanese(String text){
+    public Boolean isJapanese(String text) {
         switch (detect(text)) {
             case JAPANESE:
             case KOREA:

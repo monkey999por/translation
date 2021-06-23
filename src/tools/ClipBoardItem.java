@@ -47,10 +47,9 @@ public class ClipBoardItem {
     public Object getAsValue() {
         try {
             return item.get();
-        } catch (Exception e){
-            return  null;
+        } catch (Exception e) {
+            return null;
         }
-
     }
 
     /**
@@ -59,7 +58,7 @@ public class ClipBoardItem {
     public boolean isImage() {
         try {
             return item.get() instanceof Image;
-        } catch (Exception e){
+        } catch (Exception e) {
             if (Setting.getAsBoolean("debug_mode")) e.printStackTrace();
             return false;
         }
@@ -71,28 +70,36 @@ public class ClipBoardItem {
     public boolean isText() {
         try {
             return item.get() instanceof String;
-        } catch (Exception e){
+        } catch (Exception e) {
             if (Setting.getAsBoolean("debug_mode")) e.printStackTrace();
             return false;
         }
     }
 
+    /**
+     * @return the same as {@link Optional#isEmpty()}
+     */
     public boolean isEmpty() {
         return item.isEmpty();
     }
 
-
+    /**
+     * Compare the values obtained from the clipboard held internally.
+     *
+     * @param target Comparison
+     * @return is same?
+     */
     public boolean equal(ClipBoardItem target) {
         // type is same?
         var isSameType = (this.isText() && target.isText()) ||
                 (this.isImage() && target.isImage());
 
         // return not same type and type is null.
-        if (! isSameType) return false;
+        if (!isSameType) return false;
 
         // value is same?
         var isSameValue = false;
-        if (this.isText() && target.isText()){
+        if (this.isText() && target.isText()) {
             String me = (String) item.get();
             String param = (String) target.getAsValue();
             isSameValue = me.equals(param);
