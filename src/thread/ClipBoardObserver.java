@@ -4,30 +4,38 @@ import app.Setting;
 import tools.MyClipBoard;
 import translate.TranslationWorker;
 
+import java.awt.datatransfer.DataFlavor;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.Objects;
+
 /**
  * Monitor System clipboard.
  */
 public class ClipBoardObserver implements Runnable {
 
-    //前回のクリップボードの内容を保持する
-    private static String lastTimeClipText = MyClipBoard.getText() == null ? "" : MyClipBoard.getText();
-
     TranslationWorker worker = new TranslationWorker();
 
-    public ClipBoardObserver() {
-    }
+    //前回のクリップボードの内容を保持する
+    private static Object lastTimeClip = MyClipBoard.get();
 
     /**
      * Monitor System clipboard, and when detect clipboard changed, run event.
      */
     @Override
     public void run() {
+
         // クリップボードを監視しながらポーリング
         int gcCount = 0;
         var loopInterval = Setting.getAsLong("loop_interval");
 
         while (true) {
-            if (lastTimeClipText.equals(MyClipBoard.getText())) {
+
+            var currentClip = MyClipBoard.get();
+            if (lastTimeClip != null &&
+                currentClip != null &&
+                    lastTimeClip.equals(MyClipBoard.get())) {
                 //一定時間経過後にGCする 1800ループごと
                 if (gcCount++ > 1800) {
                     System.out.println("Garbage Collection called");
@@ -37,17 +45,15 @@ public class ClipBoardObserver implements Runnable {
                 try {
                     Thread.sleep(loopInterval);
                 } catch (InterruptedException e) {
-                    if (Setting.getAsBoolean("debug_mode")) {
-                        e.printStackTrace();
-                    }
+                    if (Setting.getAsBoolean("debug_mode")) e.printStackTrace();
                 }
                 continue;
             }
 
             // translation worker run
-            var ct = MyClipBoard.getText();
+            var ct = (String) MyClipBoard.get(DataFlavor.stringFlavor);
             worker.run(ct);
-            lastTimeClipText = ct;
+            lastTimeClip = ct;
         }
     }
 }
