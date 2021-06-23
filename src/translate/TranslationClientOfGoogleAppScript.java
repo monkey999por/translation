@@ -1,7 +1,6 @@
 package translate;
 
 import app.Setting;
-import com.cybozu.labs.langdetect.LangDetectException;
 import org.apache.commons.codec.net.URLCodec;
 import tools.Cmd;
 
@@ -11,7 +10,7 @@ import java.util.Objects;
 /**
  * see https://script.google.com/home/projects/1sFWfV_MOJbmBeTLT_R9F4Qq0qPolgkRsVt8A_sCMI2C9DTccZBRdHFDt/edit
  */
-public class TranslationClientOfGoogleAppScript implements TranslationClient{
+public class TranslationClientOfGoogleAppScript implements TranslationClient {
     private static final URLCodec codec = new URLCodec("UTF-8");
 
     private final LangDetector detector = new LangDetectorOfCybozuLabs();
@@ -53,7 +52,7 @@ public class TranslationClientOfGoogleAppScript implements TranslationClient{
     }
 
     @Override
-    public String translate(String text){
+    public String translate(String text) {
         text = Objects.isNull(text) ? "" : text;
         String requestUrl = detector.isJapanese(text)
                 ? createRequestUrl(text, TargetLang.JAPANESE, TargetLang.ENGLISH)
