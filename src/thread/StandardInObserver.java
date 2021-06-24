@@ -11,6 +11,8 @@ import java.util.Scanner;
  */
 public class StandardInObserver implements Runnable {
 
+    TranslationWorker worker = new TranslationWorker();
+
     public StandardInObserver() {
     }
 
@@ -25,7 +27,7 @@ public class StandardInObserver implements Runnable {
                 if (CommandExecutor.isCommand(input)) {
                     CommandExecutor.run(input);
                 } else {
-                    TranslationWorker.run(input);
+                    worker.run(input);
                 }
 
             }

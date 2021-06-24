@@ -1,7 +1,7 @@
 package thread;
 
 import app.Setting;
-import tools.MyClipBoard;
+import tools.ClipBoardItem;
 import translate.TranslationWorker;
 
 /**
@@ -9,43 +9,61 @@ import translate.TranslationWorker;
  */
 public class ClipBoardObserver implements Runnable {
 
-    //前回のクリップボードの内容を保持する
-    private static String lastTimeClipText = MyClipBoard.getText() == null ? "" : MyClipBoard.getText();
-
-    public ClipBoardObserver() {
-    }
+    TranslationWorker worker = new TranslationWorker();
 
     /**
      * Monitor System clipboard, and when detect clipboard changed, run event.
      */
     @Override
     public void run() {
-        // クリップボードを監視しながらポーリング
-        int gcCount = 0;
+
+        var gcController = new GCController();
         var loopInterval = Setting.getAsLong("loop_interval");
 
+        var lastTimeClip = new ClipBoardItem();
+        var currentClip = new ClipBoardItem();
+
+
         while (true) {
-            if (lastTimeClipText.equals(MyClipBoard.getText())) {
-                //一定時間経過後にGCする 1800ループごと
-                if (gcCount++ > 1800) {
-                    System.out.println("Garbage Collection called");
-                    Runtime.getRuntime().gc();
-                    gcCount = 0;
-                }
-                try {
+            try {
+                currentClip = new ClipBoardItem();
+                if (lastTimeClip.equal(currentClip)) {
+                    // call it a certain number of times, GC will be executed.
+                    gcController.call();
+
                     Thread.sleep(loopInterval);
-                } catch (InterruptedException e) {
-                    if (Setting.getAsBoolean("debug_mode")) {
-                        e.printStackTrace();
-                    }
+                    continue;
                 }
-                continue;
+            } catch (Exception e) {
+                if (Setting.getAsBoolean("debug_mode")) e.printStackTrace();
             }
 
             // translation worker run
-            var ct = MyClipBoard.getText();
-            TranslationWorker.run(ct);
-            lastTimeClipText = ct;
+            if (currentClip.isText()) {
+                worker.run((String) currentClip.getAsValue());
+            }
+            lastTimeClip = currentClip;
+
         }
+    }
+
+    private class GCController {
+        private int gcCount;
+        private final int threshold = 1800;
+
+        /**
+         * If you call it a certain number of times, GC will be executed.
+         */
+        void call() {
+            this.gcCount++;
+
+            //一定回数ループ後にGCする 1800ループごと
+            if (this.gcCount > threshold) {
+                if (Setting.getAsBoolean("debug_mode")) System.out.println("Garbage Collection called");
+                Runtime.getRuntime().gc();
+                this.gcCount = 0;
+            }
+        }
+
     }
 }
