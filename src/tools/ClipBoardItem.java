@@ -1,6 +1,6 @@
 package tools;
 
-import app.Setting;
+import app.Debug;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -37,7 +37,7 @@ public class ClipBoardItem {
             item = Optional.ofNullable(clip.getData(availableFlavor));
         } catch (Exception e) {
             item = Optional.empty();
-            if (Setting.getAsBoolean("debug_mode")) e.printStackTrace();
+            Debug.print(e);
         }
     }
 
@@ -59,7 +59,7 @@ public class ClipBoardItem {
         try {
             return item.get() instanceof Image;
         } catch (Exception e) {
-            if (Setting.getAsBoolean("debug_mode")) e.printStackTrace();
+            Debug.print(e);
             return false;
         }
     }
@@ -71,7 +71,7 @@ public class ClipBoardItem {
         try {
             return item.get() instanceof String;
         } catch (Exception e) {
-            if (Setting.getAsBoolean("debug_mode")) e.printStackTrace();
+            Debug.print(e);
             return false;
         }
     }

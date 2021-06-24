@@ -1,5 +1,6 @@
 package translate;
 
+import app.Debug;
 import app.Setting;
 import org.apache.commons.codec.net.URLCodec;
 import tools.Cmd;
@@ -30,9 +31,7 @@ public class TranslationClientOfGoogleAppScript implements TranslationClient {
         try {
             text = Objects.isNull(text) ? "" : codec.encode(text, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            if (Setting.getAsBoolean("debug_mode")) {
-                e.printStackTrace();
-            }
+            Debug.print(e);
         }
 
         String url = Setting.getAsString("translate_request_url");

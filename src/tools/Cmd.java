@@ -1,6 +1,6 @@
 package tools;
 
-import app.Setting;
+import app.Debug;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,10 +37,7 @@ public class Cmd {
             return builder.toString();
 
         } catch (IOException | InterruptedException e) {
-
-            if (Setting.getAsBoolean("debug_mode")) {
-                e.printStackTrace();
-            }
+            Debug.print(e);
         }
         return null;
     }

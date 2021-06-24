@@ -15,7 +15,7 @@ class MyTextToSpeechClientTest {
      */
     @Test
     @DisplayName("not run playback")
-    void request_notRun(){
+    void request_notRun() {
         assertThat("")
                 .isEqualTo("");
     }
@@ -25,7 +25,7 @@ class MyTextToSpeechClientTest {
      */
     @Test
     @DisplayName("not run playback")
-    void playback_notRun(){
+    void playback_notRun() {
         assertThat("")
                 .isEqualTo("");
     }

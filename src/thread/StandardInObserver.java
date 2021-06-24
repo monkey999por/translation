@@ -1,5 +1,6 @@
 package thread;
 
+import app.Debug;
 import app.Setting;
 import cmd.CommandExecutor;
 import translate.TranslationWorker;
@@ -32,9 +33,7 @@ public class StandardInObserver implements Runnable {
 
             }
         } catch (Exception e) {
-            if (Setting.getAsBoolean("debug_mode")) {
-                e.printStackTrace();
-            }
+            Debug.print(e);
         }
     }
 }

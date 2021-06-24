@@ -1,5 +1,6 @@
 package translate;
 
+import app.Debug;
 import app.Setting;
 import com.cybozu.labs.langdetect.LangDetectException;
 import tools.MyTextToSpeechClient;
@@ -63,9 +64,7 @@ public class TranslationWorker {
                         MyTextToSpeechClient.playback();
                     }
                 } catch (Exception e) {
-                    if (Setting.getAsBoolean("debug_mode")) {
-                        e.printStackTrace();
-                    }
+                    Debug.print(e);
                 }
             }
         };

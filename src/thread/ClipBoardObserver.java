@@ -1,5 +1,6 @@
 package thread;
 
+import app.Debug;
 import app.Setting;
 import tools.ClipBoardItem;
 import translate.TranslationWorker;
@@ -35,7 +36,7 @@ public class ClipBoardObserver implements Runnable {
                     continue;
                 }
             } catch (Exception e) {
-                if (Setting.getAsBoolean("debug_mode")) e.printStackTrace();
+                Debug.print(e);
             }
 
             // translation worker run
@@ -59,7 +60,7 @@ public class ClipBoardObserver implements Runnable {
 
             //一定回数ループ後にGCする 1800ループごと
             if (this.gcCount > threshold) {
-                if (Setting.getAsBoolean("debug_mode")) System.out.println("Garbage Collection called");
+                Debug.print("Garbage Collection called");
                 Runtime.getRuntime().gc();
                 this.gcCount = 0;
             }

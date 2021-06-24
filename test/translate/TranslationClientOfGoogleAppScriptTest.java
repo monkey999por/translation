@@ -159,7 +159,7 @@ class TranslationClientOfGoogleAppScriptTest {
         TranslationClientOfGoogleAppScript clientMock = mock(TranslationClientOfGoogleAppScript.class);
 
         try (
-             var client = mockStatic(TranslationClientOfGoogleAppScript.class)
+                var client = mockStatic(TranslationClientOfGoogleAppScript.class)
         ) {
 
             when(detector.isJapanese(anyString()))
