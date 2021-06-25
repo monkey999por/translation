@@ -34,7 +34,7 @@ public class TranslationWorker {
             public String call() throws LangDetectException {
                 System.out.println("---------------------------------------------------------");
                 System.out.println("■ from -> : " + translationText);
-                var result = client.translate(translationText);
+                var result = client.request(translationText);
                 // translate result to console
                 System.out.println("■ to   -> : " + result);
                 System.out.println();

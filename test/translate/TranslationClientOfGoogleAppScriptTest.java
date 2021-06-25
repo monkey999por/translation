@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 
 /**
  * @see <a href="https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html">mockit reference</a>
- * Exclusion method : {@link TranslationClientOfGoogleAppScript#request(String)}
+ * Exclusion method : {@link TranslationClientOfGoogleAppScript#translate(String)}
  */
 class TranslationClientOfGoogleAppScriptTest {
 
@@ -123,11 +123,11 @@ class TranslationClientOfGoogleAppScriptTest {
     }
 
     /**
-     * @see TranslationClientOfGoogleAppScript#request(String)
+     * @see TranslationClientOfGoogleAppScript#translate(String)
      */
     @Test
     @DisplayName("method \"request\" call subroutine")
-    void request_callNext() {
+    void callNext() {
         try (var mockCmd = mockStatic(Cmd.class)) {
             mockCmd.when(() -> Cmd.execute(anyBoolean(), any()))
                     .thenAnswer(invocationOnMock -> {
@@ -140,20 +140,20 @@ class TranslationClientOfGoogleAppScriptTest {
                         return paramAll.toString();
                     });
 
-            assertThat(TranslationClientOfGoogleAppScript.request("request_url"))
+            assertThat(TranslationClientOfGoogleAppScript.translate("url"))
                     .isNotNull()
-                    .isEqualTo("false : curl : -L : -s : request_url : ");
+                    .isEqualTo("false : curl : -L : -s : url : ");
 
         }
     }
 
 
     /**
-     * @see TranslationClientOfGoogleAppScript#translate(String)
+     * @see TranslationClientOfGoogleAppScript#request(String)
      */
     @Test
     @DisplayName("convert param and call next inner method")
-    void translate_convertParamAndCallNextMethod() throws LangDetectException {
+    void convertParamAndCallNextMethod() throws LangDetectException {
 
         LangDetector detector = mock(LangDetectorOfCybozuLabs.class);
         TranslationClientOfGoogleAppScript clientMock = mock(TranslationClientOfGoogleAppScript.class);
@@ -170,26 +170,26 @@ class TranslationClientOfGoogleAppScriptTest {
                         return invocationOnMock.getArgument(1).toString().equals("ja") ? "ja" : "en";
                     });
             // this is mock. called by TranslationClientOfGoogleAppScript#translate
-            client.when(() -> TranslationClientOfGoogleAppScript.request(anyString()))
+            client.when(() -> TranslationClientOfGoogleAppScript.translate(anyString()))
                     .thenAnswer(invocationOnMock -> {
                         return invocationOnMock.getArgument(0);
                     });
 
             // this is test target. call real method.
-            client.when(() -> clientMock.translate(anyString()))
+            client.when(() -> clientMock.request(anyString()))
                     .thenCallRealMethod();
 
-            assertThat(clientMock.translate("ja"))
+            assertThat(clientMock.request("ja"))
                     .isEqualTo("ja");
         }
     }
 
     /**
-     * @see TranslationClientOfGoogleAppScript#translate(String)
+     * @see TranslationClientOfGoogleAppScript#request(String)
      */
     @Test
     @DisplayName("convert param and call next inner method2")
-    void translate_convertParamAndCallNextMethod_2() throws LangDetectException {
+    void convertParamAndCallNextMethod_2() throws LangDetectException {
 
         LangDetector detector = mock(LangDetectorOfCybozuLabs.class);
         TranslationClientOfGoogleAppScript clientMock = mock(TranslationClientOfGoogleAppScript.class);
@@ -205,26 +205,26 @@ class TranslationClientOfGoogleAppScriptTest {
                         return invocationOnMock.getArgument(1).toString().equals("ja") ? "ja" : "en";
                     });
             // this is mock. called by TranslationClientOfGoogleAppScript#translate
-            client.when(() -> TranslationClientOfGoogleAppScript.request(anyString()))
+            client.when(() -> TranslationClientOfGoogleAppScript.translate(anyString()))
                     .thenAnswer(invocationOnMock -> {
                         return invocationOnMock.getArgument(0);
                     });
 
             // this is test target. call real method.
-            client.when(() -> clientMock.translate(anyString()))
+            client.when(() -> clientMock.request(anyString()))
                     .thenCallRealMethod();
 
-            assertThat(clientMock.translate("en"))
+            assertThat(clientMock.request("en"))
                     .isEqualTo("en");
         }
     }
 
     /**
-     * @see TranslationClientOfGoogleAppScript#translate(String)
+     * @see TranslationClientOfGoogleAppScript#request(String)
      */
     @Test
     @DisplayName("param is null")
-    void translate_paramIsNull() throws LangDetectException {
+    void paramIsNull() throws LangDetectException {
         LangDetector detector = mock(LangDetectorOfCybozuLabs.class);
         TranslationClientOfGoogleAppScript clientMock = mock(TranslationClientOfGoogleAppScript.class);
 
@@ -242,15 +242,15 @@ class TranslationClientOfGoogleAppScriptTest {
                                 "first argument is null" : "first argument is not null";
                     });
             // this is mock. called by TranslationClientOfGoogleAppScript#translate
-            client.when(() -> TranslationClientOfGoogleAppScript.request(anyString()))
+            client.when(() -> TranslationClientOfGoogleAppScript.translate(anyString()))
                     .thenAnswer(invocationOnMock -> {
                         return invocationOnMock.getArgument(0);
                     });
             // this is test target. call real method.
-            client.when(() -> clientMock.translate(anyString()))
+            client.when(() -> clientMock.request(anyString()))
                     .thenCallRealMethod();
 
-            assertThat(clientMock.translate(null))
+            assertThat(clientMock.request(null))
                     .isEqualTo("first argument is null");
         }
     }
