@@ -46,18 +46,18 @@ public class TranslationClientOfGoogleAppScript implements TranslationClient {
      * @param requestUrl created by {@link TranslationClientOfGoogleAppScript#createRequestUrl(String, TargetLang, TargetLang)}.
      * @return translate result.
      */
-    public static String request(String requestUrl) {
+    public static String translate(String requestUrl) {
         return Cmd.execute(false, new String[]{"curl", "-L", "-s", requestUrl});
     }
 
     @Override
-    public String translate(String text) {
+    public String request(String text) {
         text = Objects.isNull(text) ? "" : text;
         String requestUrl = detector.isJapanese(text)
                 ? createRequestUrl(text, TargetLang.JAPANESE, TargetLang.ENGLISH)
                 : createRequestUrl(text, TargetLang.ENGLISH, TargetLang.JAPANESE);
 
-        return request(requestUrl);
+        return translate(requestUrl);
     }
 
 }

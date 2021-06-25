@@ -9,5 +9,5 @@ public interface TranslationClient {
      * @param text translate text.
      * @return translate result.
      */
-    String translate(String text);
+    String request(String text);
 }
