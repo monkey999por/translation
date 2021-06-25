@@ -41,6 +41,9 @@ public class CommandExecutor {
             case "reload":
                 Setting.reLoad();
                 return true;
+            case "exit":
+                System.exit(0);
+                return true;
             default:
                 return false;
         }
