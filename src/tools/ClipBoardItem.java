@@ -104,6 +104,9 @@ public class ClipBoardItem {
             String param = (String) target.getAsValue();
             isSameValue = me.equals(param);
         }
+        // todo -> equal image ??
+        if(this.isImage() || target.isImage()) return true;
+
         return isSameValue;
     }
 }

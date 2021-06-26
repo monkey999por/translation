@@ -37,6 +37,7 @@ public class ClipBoardObserver implements Runnable {
                 }
             } catch (Exception e) {
                 Debug.print(e);
+                continue;
             }
 
             // translation worker run
