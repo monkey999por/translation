@@ -22,7 +22,7 @@ public class Debug {
     }
 
     /**
-     * run with debug debug mode.
+     * run with debug mode.
      * print massage.
      *
      * @param s message
@@ -31,4 +31,13 @@ public class Debug {
         if (debug_mode()) System.out.println(s);
     }
 
+    /**
+     * run with debug mode.
+     * run task.
+     *
+     * @param task action
+     */
+    public static void run(Task task) {
+        if (debug_mode()) task.run();
+    }
 }
