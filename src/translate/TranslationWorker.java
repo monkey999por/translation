@@ -2,23 +2,25 @@ package translate;
 
 import app.Debug;
 import app.Setting;
-import com.cybozu.labs.langdetect.LangDetectException;
 import tools.MyTextToSpeechClient;
 
-import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * worker as a series of processes related to translation.
  */
 public class TranslationWorker {
 
+    // translation tools
     LangDetector detector = new LangDetectorOfCybozuLabs();
     TranslationClientOfGoogleAppScript client = new TranslationClientOfGoogleAppScript();
 
-    public TranslationWorker() {
-
-    }
+    // thread control init.
+    ExecutorService translator = Executors.newCachedThreadPool();
+    ExecutorService translateResultOut = Executors.newSingleThreadExecutor();
+    ExecutorService textToSpeechService = Executors.newSingleThreadExecutor();
 
     /**
      * do ...
@@ -28,23 +30,26 @@ public class TranslationWorker {
      * @param translationText text as translate
      */
     public void run(String translationText) {
-        // translate clipboard text
-        var translation = new Callable<String>() {
-            @Override
-            public String call() throws LangDetectException {
-                System.out.println("---------------------------------------------------------");
-                System.out.println("■ from -> : " + translationText);
-                var result = client.request(translationText);
-                // translate result to console
-                System.out.println("■ to   -> : " + result);
-                System.out.println();
-                return result;
+
+        // request translation
+        Future<String> result =
+                translator.submit(() -> client.request(translationText));
+        // show result
+        translateResultOut.submit(() -> {
+            while (true) {
+                if (!result.isDone()) continue;
+                try {
+                    System.out.println("---------------------------------------------------------");
+                    System.out.println("■ from -> : " + translationText);
+                    System.out.println("■ to   -> : " + result.get());
+                    System.out.println();
+                } catch (Exception e) {
+                    Debug.print(e);
+                } finally {
+                    break;
+                }
             }
-        };
-        // execute translate clipboard text
-        var translateService = Executors.newCachedThreadPool();
-        var translationResult = translateService.submit(translation);
-        translateService.shutdown();
+        });
 
         /*speech to text run and  playback text to speech result
          * clipboard text is English -> Clipboard text(=English) to speech
@@ -56,7 +61,7 @@ public class TranslationWorker {
                 try {
                     // text to speech request
                     MyTextToSpeechClient.request(
-                            detector.isJapanese(translationText) ? translationResult.get() : translationText);
+                            detector.isJapanese(translationText) ? result.get() : translationText);
 
                     //  play back text to speech result(mp3)
                     // see -> setting : "google_cloud_text_to_speech_out_audio_file"
@@ -69,9 +74,6 @@ public class TranslationWorker {
             }
         };
         // execute text to speech
-        var textToSpeechService = Executors.newCachedThreadPool();
         textToSpeechService.submit(textToSpeech);
-        textToSpeechService.shutdown();
     }
-
 }
