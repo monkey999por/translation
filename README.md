@@ -65,5 +65,5 @@ setting.propertiesが`./transration/setting`配下にあります。
    - その他の外部コマンド。任意のアプリケーションを実行可能です。
    
   ※コマンドを使用するには、プレフィックスの後にコマンドを指定します。  
-  例：`:reload`
+  例：`:reload`  
   プレフィックスは設定の`command_prefix`で指定します。   
