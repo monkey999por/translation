@@ -67,3 +67,10 @@ setting.propertiesが`./transration/setting`配下にあります。
   ※コマンドを使用するには、プレフィックスの後にコマンドを指定します。  
   例：`:reload`  
   プレフィックスは設定の`command_prefix`で指定します。   
+
+## For developer
+- How to debug?  
+  intelliJ IDEAを使用します。  
+  Run -> Debug.. -> Configuration
+  java11を指定。引数に`.\setting\setting.properties`を指定。
+  

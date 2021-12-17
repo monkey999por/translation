@@ -27,3 +27,5 @@ bin/
 
 # winmerge backup file (auto create)
 *.bak
+*.mp3
+*.wav
