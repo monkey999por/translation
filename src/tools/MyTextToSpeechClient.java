@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.nio.file.Paths;
 
 /**
  * see https://cloud.google.com/text-to-speech
@@ -48,7 +49,7 @@ public class MyTextToSpeechClient {
             var audioContents = response.getAudioContent();
 
             // Write the response to the output file.
-            try (var out = new FileOutputStream(Setting.getAsString("google_cloud_text_to_speech_out_audio_file"))) {
+            try (var out = new FileOutputStream(Paths.get(Setting.getAsString("google_cloud_text_to_speech_out_audio_file")) .toFile().getAbsolutePath())) {
                 out.write(audioContents.toByteArray());
             }
         }
@@ -64,7 +65,7 @@ public class MyTextToSpeechClient {
      */
     public static void playback() throws JavaLayerException, FileNotFoundException {
         var audioFile = new FileInputStream(
-                Setting.getAsString("google_cloud_text_to_speech_out_audio_file"));
+                Paths.get(Setting.getAsString("google_cloud_text_to_speech_out_audio_file")) .toFile().getAbsolutePath());
         var audioDevice = FactoryRegistry.systemRegistry().createAudioDevice();
         var player = new AdvancedPlayer(audioFile, audioDevice);
         player.play();

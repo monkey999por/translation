@@ -1,10 +1,12 @@
 package translate;
 
+import app.Debug;
 import app.Setting;
 import com.cybozu.labs.langdetect.Detector;
 import com.cybozu.labs.langdetect.DetectorFactory;
 import com.cybozu.labs.langdetect.LangDetectException;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**
@@ -29,9 +31,8 @@ public class LangDetectorOfCybozuLabs implements LangDetector {
         synchronized (this) {
             try {
                 if (!Status.isInit) {
-                    DetectorFactory.loadProfile(
-                            Setting.getAsString("lang_detector_profile")
-                    );
+                    String profile = Paths.get(Setting.getAsString("lang_detector_profile")).toFile().getAbsolutePath();
+                    DetectorFactory.loadProfile(profile);
                     Status.isInit = true;
                 }
             } catch (Exception e) {
@@ -64,6 +65,7 @@ public class LangDetectorOfCybozuLabs implements LangDetector {
                     return TargetLang.ENGLISH;
             }
         } catch (Exception e) {
+            Debug.print(e);
             return null;
         }
     }
