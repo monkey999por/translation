@@ -1,4 +1,6 @@
 @echo off
+@pushd %~dp0
+
 :: %1: "-setting"
 
 :RESTART
