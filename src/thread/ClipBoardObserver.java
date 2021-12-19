@@ -39,7 +39,6 @@ public class ClipBoardObserver implements Runnable {
 
                     // ユーザ使用レベルを調整。詳細はプロパティ:use_level参照
                     useLevelController.call(false);
-                    Debug.print("interval: " + loopInterval);
 
                     Thread.sleep(loopInterval);
                     continue;
