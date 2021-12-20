@@ -26,10 +26,14 @@ class TranslationClientOfGoogleAppScriptTest {
     @Test
     @DisplayName("param japanese. the first args encoded.")
     void createRequestUrl_paramIsJapanese() {
-        String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
+        String baseUrl = "https://dummy";
+        String param = "text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
-            mockSetting.when(() -> Setting.getAsString(Mockito.anyString())).thenReturn(baseUrl);
+            // 呼び出し回数にで戻り値を変更させるやり方。参考：https://reasonable-code.com/mockito-consecutive-calls/
+            mockSetting.when(() -> Setting.getAsString(Mockito.anyString()))
+                    .thenReturn(baseUrl)
+                    .thenReturn(param);
 
             assertThat(TranslationClientOfGoogleAppScript.createRequestUrl("あいうえお", TargetLang.JAPANESE, TargetLang.ENGLISH))
                     .isNotNull()
@@ -43,10 +47,13 @@ class TranslationClientOfGoogleAppScriptTest {
     @Test
     @DisplayName("param alphabet")
     void createRequestUrl_paramIsAlphabet() {
-        String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
+        String baseUrl = "https://dummy";
+        String param = "text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
-            mockSetting.when(() -> Setting.getAsString(Mockito.anyString())).thenReturn(baseUrl);
+            mockSetting.when(() -> Setting.getAsString(Mockito.anyString()))
+                    .thenReturn(baseUrl)
+                    .thenReturn(param);
 
             assertThat(TranslationClientOfGoogleAppScript.createRequestUrl("hello", TargetLang.ENGLISH, TargetLang.JAPANESE))
                     .isNotNull()
@@ -60,10 +67,13 @@ class TranslationClientOfGoogleAppScriptTest {
     @Test
     @DisplayName("including half-width space before and after, and middle")
     void createRequestUrl_includingHalfSpace() {
-        String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
+        String baseUrl = "https://dummy";
+        String param = "text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
-            mockSetting.when(() -> Setting.getAsString(Mockito.anyString())).thenReturn(baseUrl);
+            mockSetting.when(() -> Setting.getAsString(Mockito.anyString()))
+                    .thenReturn(baseUrl)
+                    .thenReturn(param);
 
             assertThat(TranslationClientOfGoogleAppScript.createRequestUrl(" hello world ", TargetLang.JAPANESE, TargetLang.ENGLISH))
                     .isNotNull()
@@ -77,10 +87,13 @@ class TranslationClientOfGoogleAppScriptTest {
     @Test
     @DisplayName("including Full-width space before and after, and middle")
     void createRequestUrl_includingFullSpace() {
-        String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
+        String baseUrl = "https://dummy";
+        String param = "text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
-            mockSetting.when(() -> Setting.getAsString(Mockito.anyString())).thenReturn(baseUrl);
+            mockSetting.when(() -> Setting.getAsString(Mockito.anyString()))
+                    .thenReturn(baseUrl)
+                    .thenReturn(param);
 
             assertThat(TranslationClientOfGoogleAppScript.createRequestUrl("　hello　world　", TargetLang.JAPANESE, TargetLang.ENGLISH))
                     .isNotNull()
@@ -94,10 +107,13 @@ class TranslationClientOfGoogleAppScriptTest {
     @Test
     @DisplayName("including anything(symbol, number, newline code, like regexp, ..other)")
     void createRequestUrl_mixedAnything() {
-        String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
+        String baseUrl = "https://dummy";
+        String param = "text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
-            mockSetting.when(() -> Setting.getAsString(Mockito.anyString())).thenReturn(baseUrl);
+            mockSetting.when(() -> Setting.getAsString(Mockito.anyString()))
+                    .thenReturn(baseUrl)
+                    .thenReturn(param);
 
             assertThat(TranslationClientOfGoogleAppScript.createRequestUrl("12345;^[A-Z]+-*/\\あいう)('&%$#\"!@`*+:/.,。、", TargetLang.JAPANESE, TargetLang.ENGLISH))
                     .isNotNull()
@@ -111,10 +127,13 @@ class TranslationClientOfGoogleAppScriptTest {
     @Test
     @DisplayName("including null")
     void createRequestUrl_paramIsNull() {
-        String baseUrl = "https://dummy?text=\\\"{text}\\\"&source={source}&target={target}";
+        String baseUrl = "https://dummy";
+        String param = "text=\\\"{text}\\\"&source={source}&target={target}";
         try (var mockSetting = mockStatic(Setting.class)) {
             mockSetting.when(() -> Setting.getAsBoolean(Mockito.anyString())).thenReturn(true);
-            mockSetting.when(() -> Setting.getAsString(Mockito.anyString())).thenReturn(baseUrl);
+            mockSetting.when(() -> Setting.getAsString(Mockito.anyString()))
+                    .thenReturn(baseUrl)
+                    .thenReturn(param);
 
             assertThat(TranslationClientOfGoogleAppScript.createRequestUrl(null, TargetLang.JAPANESE, TargetLang.ENGLISH))
                     .isNotNull()

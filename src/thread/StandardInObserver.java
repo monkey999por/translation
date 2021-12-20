@@ -5,6 +5,7 @@ import app.Setting;
 import cmd.CommandExecutor;
 import translate.TranslationWorker;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -30,8 +31,12 @@ public class StandardInObserver implements Runnable {
                 } else {
                     worker.run(input);
                 }
-
             }
+        } catch (NoSuchElementException e1) {
+            System.out.println("致命的なエラーが発生しました。\r\n" +
+                    "コマンドプロンプト上で何も選択していない状態でctrl+cを押下しないでください。\r\n" +
+                    "アプリケーションを再起動します。");
+            System.exit(-1);
         } catch (Exception e) {
             Debug.print(e);
         }

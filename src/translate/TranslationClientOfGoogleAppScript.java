@@ -35,9 +35,11 @@ public class TranslationClientOfGoogleAppScript implements TranslationClient {
         }
 
         String url = Setting.getAsString("translate_request_url");
-        return url.replace("{text}", text)
+        String param = Setting.getAsString("translate_request_param")
+                .replace("{text}", text)
                 .replace("{source}", source.languageCode)
                 .replace("{target}", target.languageCode);
+        return new StringBuilder().append(url).append("?").append(param).toString();
     }
 
     /**
