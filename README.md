@@ -49,7 +49,8 @@ setting.propertiesが`./transration/setting`配下にあります。
 
 ## その他の機能
 -  翻訳対象、翻訳結果の英語を音声再生することが可能です。以下の設定が必要です。  
-   - 1.設定の`enable_google_cloud_text_to_speech`(true/false)で音声再生の有無を指定。
+   - 1.設定の`enable_google_cloud_text_to_speech`(true/false)で音声再生の有無を指定。  
+  ※使用にはGoogle CloudでText-to-Speechを有効にし、環境変数`GOOGLE_APPLICATION_CREDENTIALS`に生成した秘密鍵のパスを指定してあることが前提です。
     
 
 - 文字化け対策  
