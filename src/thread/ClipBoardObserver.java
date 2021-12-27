@@ -91,8 +91,8 @@ public class ClipBoardObserver implements Runnable {
      * 詳細は設定の<code>use_level</code>参照。
      */
     private class UseLevelController {
-        private int loopCount;
-        private Map<Integer, Integer> useLevels = new LinkedHashMap<>();
+        private Integer loopCount = Integer.valueOf(0);
+        private Map<Integer, Long> useLevels = new LinkedHashMap<>();
 
         /**
          * use_level初期化用
@@ -101,7 +101,7 @@ public class ClipBoardObserver implements Runnable {
             Arrays.stream(Setting.getAsString("use_level")
                     .split(","))
                     .map(i -> i.split(":"))
-                    .forEach(x -> useLevels.put(Integer.parseInt(x[0]), Integer.parseInt(x[1])));
+                    .forEach(x -> useLevels.put(Integer.parseInt(x[0]), Long.parseLong(x[1])));
         }
 
         /**
@@ -116,9 +116,13 @@ public class ClipBoardObserver implements Runnable {
             }
             initUseLevel();
             this.loopCount++;
+
             useLevels.forEach((count, interval) -> {
+                if (this.loopCount.equals(count)) {
+                    Debug.print("\"use_level\" changed. current level: " + interval);
+                }
                 if (this.loopCount >= count) {
-                    loopInterval = Long.parseLong(interval.toString());
+                    loopInterval = interval;
                     return;
                 }
             });
