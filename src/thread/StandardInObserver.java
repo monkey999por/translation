@@ -1,7 +1,7 @@
 package thread;
 
 import app.Debug;
-import app.Setting;
+import monkey999.tools.Setting;
 import cmd.CommandExecutor;
 import translate.TranslationWorker;
 

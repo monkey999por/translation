@@ -1,6 +1,7 @@
 package app;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
+import monkey999.tools.Setting;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

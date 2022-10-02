@@ -1,6 +1,6 @@
 package tools;
 
-import app.Setting;
+import monkey999.tools.Setting;
 import com.google.cloud.texttospeech.v1.*;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.FactoryRegistry;

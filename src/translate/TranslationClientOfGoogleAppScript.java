@@ -1,9 +1,9 @@
 package translate;
 
 import app.Debug;
-import app.Setting;
+import monkey999.tools.Setting;
 import org.apache.commons.codec.net.URLCodec;
-import tools.Cmd;
+import monkey999.tools.Cmd;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Objects;
@@ -49,7 +49,12 @@ public class TranslationClientOfGoogleAppScript implements TranslationClient {
      * @return translate result.
      */
     public static String translate(String requestUrl) {
-        return Cmd.execute(false, new String[]{"curl", "-L", "-s", requestUrl});
+        try {
+            return Cmd.execute(false, new String[]{"curl", "-L", "-s", requestUrl});
+        }catch (Exception e) {
+            // とりあえずつぶしとけ
+            return "API ERROR";
+        }
     }
 
     @Override

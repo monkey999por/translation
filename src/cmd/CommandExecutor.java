@@ -1,7 +1,7 @@
 package cmd;
 
-import app.Setting;
-import tools.Cmd;
+import monkey999.tools.Setting;
+import monkey999.tools.Cmd;
 
 /**
  * any command execute by this.

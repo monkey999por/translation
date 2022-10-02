@@ -1,7 +1,7 @@
 package translate;
 
 import app.Debug;
-import app.Setting;
+import monkey999.tools.Setting;
 import tools.MyTextToSpeechClient;
 
 import java.util.concurrent.ExecutorService;

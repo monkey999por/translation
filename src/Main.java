@@ -1,4 +1,4 @@
-import app.Setting;
+import monkey999.tools.Setting;
 import thread.ClipBoardObserver;
 import thread.StandardInObserver;
 

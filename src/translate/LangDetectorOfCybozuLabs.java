@@ -1,7 +1,7 @@
 package translate;
 
 import app.Debug;
-import app.Setting;
+import monkey999.tools.Setting;
 import com.cybozu.labs.langdetect.Detector;
 import com.cybozu.labs.langdetect.DetectorFactory;
 import com.cybozu.labs.langdetect.LangDetectException;

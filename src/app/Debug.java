@@ -1,5 +1,7 @@
 package app;
 
+import monkey999.tools.Setting;
+
 public class Debug {
 
     private static final String DEBUG_MODE_KEY = "debug_mode";

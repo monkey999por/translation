@@ -1,11 +1,11 @@
 package translate;
 
-import app.Setting;
+import monkey999.tools.Setting;
 import com.cybozu.labs.langdetect.LangDetectException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import tools.Cmd;
+import monkey999.tools.Cmd;
 
 import java.util.Arrays;
 

@@ -1,6 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>translation</groupId>
     <artifactId>translation</artifactId>
@@ -55,8 +54,8 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <id>make-assembly</id>                        <!-- this is used for inheritance merges -->
+                        <phase>package</phase>                        <!-- bind to the packaging phase -->
                         <goals>
                             <goal>single</goal>
                         </goals>
@@ -141,5 +140,23 @@
             <version>1.1.1</version>
             <scope>test</scope>
         </dependency>
+        <!-- local jar -->
+        <dependency>
+            <groupId>monkey999.tools.props</groupId>
+            <artifactId>props</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>monkey999.tools.cmd_run</groupId>
+            <artifactId>cmd_run</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>my.mvnrep</id>
+            <name>webdav</name>
+            <url>http://192.168.10.61/webdav</url>
+        </repository>
+    </repositories>
 </project>
