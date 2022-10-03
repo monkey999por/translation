@@ -40,6 +40,7 @@ public class CommandExecutor {
         switch (command) {
             case "reload":
                 Setting.reLoad();
+                System.out.println(Setting.getAllToString());
                 return true;
             case "exit":
                 System.exit(0);

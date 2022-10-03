@@ -52,7 +52,17 @@ setting.propertiesが`./transration/setting`配下にあります。
    - 1.設定の`enable_google_cloud_text_to_speech`(true/false)で音声再生の有無を指定。  
   ※使用にはGoogle CloudでText-to-Speechを有効にし、環境変数`GOOGLE_APPLICATION_CREDENTIALS`に生成した秘密鍵のパスを指定してあることが前提です。
     
+- 翻訳エンジンにDeepLを指定することが可能です。setting.propertiesで以下のように設定してください。
+  ```properties
+  translation_client=deepl
+  deepl.authorization=${DEEPL_AUTH_KEY}
+     ※事前にDeepLアカウントを作成し、発行されたapi auth keyを環境変数に設定してください。
+     key: DEEPL_AUTH_KEY  
+     value: {you_deepl_auth_key}
+  ```
 
+
+  
 - 文字化け対策  
   使用するコンソールによっては日本語の文字化けが起こることがあります。  
   その場合、`standard_in_encoding`をコンソールの文字コードに合わせてください。

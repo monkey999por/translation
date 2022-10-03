@@ -15,7 +15,6 @@ public class TranslationWorker {
 
     // translation tools
     LangDetector detector = new LangDetectorOfCybozuLabs();
-    TranslationClientOfGoogleAppScript client = new TranslationClientOfGoogleAppScript();
 
     // thread control init.
     ExecutorService translator = Executors.newCachedThreadPool();
@@ -30,6 +29,9 @@ public class TranslationWorker {
      * @param translationText text as translate
      */
     public void run(String translationText) {
+
+        TranslationClient client =  Setting.getAsString("translation_client").equals("deepl") ? new TranslationClientOfDeepL() :
+                new TranslationClientOfGoogleAppScript();
 
         // request translation
         Future<String> result =
