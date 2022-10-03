@@ -38,12 +38,13 @@ public class TranslationClientOfDeepL implements TranslationClient {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(Setting.getAsString("deepl.url.check.limit")))
                 .version(HttpClient.Version.HTTP_2)
-                .header("Authorization", Setting.getAsString("deepl.authorization"))
+                .header("Authorization", "DeepL-Auth-Key " + Setting.getAsString("deepl.authorization"))
                 .header("User-Agent", "translation/1.2.3").build();
 
         try {
             var response = client.send(request, HttpResponse.BodyHandlers.ofString());
             HashMap<String, Integer> deeplUsage = mapper.readValue(response.body().toString(),  new TypeReference<Map<String, Integer>>() { });
+            // TODO: APIステータスコードも確認しよう
             return deeplUsage.get("character_count") > deeplUsage.get("character_limit");
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,7 +64,7 @@ public class TranslationClientOfDeepL implements TranslationClient {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(Setting.getAsString("deepl.uri")))
                 .version(HttpClient.Version.HTTP_2)
-                .header("Authorization", Setting.getAsString("deepl.authorization"))
+                .header("Authorization", "DeepL-Auth-Key " + Setting.getAsString("deepl.authorization"))
                 .header("User-Agent", "translation/1.2.3")
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .POST(HttpRequest.BodyPublishers.ofString("text=Hello%2C%20world!this&source_lang=EN&target_lang=JA"))
@@ -73,7 +74,7 @@ public class TranslationClientOfDeepL implements TranslationClient {
             // リクエストを送信
             HttpResponse<String> response = client.send(request,
                     HttpResponse.BodyHandlers.ofString());
-            
+
             // レスポンスボディを出力
             System.out.println(response.body());
             return null;
