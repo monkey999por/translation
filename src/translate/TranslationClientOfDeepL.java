@@ -4,6 +4,7 @@ import app.Debug;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import monkey999.tools.Setting;
+import org.apache.http.HttpStatus;
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,7 +17,6 @@ import java.util.Map;
 
 public class TranslationClientOfDeepL implements TranslationClient {
 
-    // TODO: synchronizedにしたい
     private static boolean available = true;
     private static ObjectMapper mapper = new ObjectMapper();
 
@@ -43,9 +43,15 @@ public class TranslationClientOfDeepL implements TranslationClient {
 
         try {
             var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            HashMap<String, Integer> deeplUsage = mapper.readValue(response.body().toString(),  new TypeReference<Map<String, Integer>>() { });
-            // TODO: APIステータスコードも確認しよう
-            return deeplUsage.get("character_count") > deeplUsage.get("character_limit");
+            if (response.statusCode() == 200) {
+                HashMap<String, Integer> deeplUsage = mapper.readValue(response.body().toString(),  new TypeReference<Map<String, Integer>>() { });
+                if (Debug.debug_mode()){
+                    System.out.println("現在の利用文字数: " + deeplUsage.get("character_count"));
+                }
+                return deeplUsage.get("character_count") > deeplUsage.get("character_limit");
+            } else {
+                throw new Exception("http status code error: " + response.statusCode());
+            }
         } catch (Exception e) {
             e.printStackTrace();
             // 例外時はその時点でアウト
