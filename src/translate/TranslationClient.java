@@ -7,7 +7,7 @@ public interface TranslationClient {
      * 2. text is japanese -> translate to english
      *
      * @param text translate text.
-     * @return translate result.
+     * @return translate result. nomal text
      */
     String request(String text);
 }

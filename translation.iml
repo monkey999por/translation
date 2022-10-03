@@ -77,5 +77,7 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.13.3" level="project" />
     <orderEntry type="library" name="Maven: monkey999.tools.props:props:0.0.1" level="project" />
     <orderEntry type="library" name="Maven: monkey999.tools.cmd_run:cmd_run:0.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.6.6" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.6.0" level="project" />
   </component>
 </module>
