@@ -2,7 +2,9 @@ package translate;
 
 import app.Debug;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import monkey999.tools.Setting;
 import org.apache.http.HttpStatus;
 
@@ -81,9 +83,18 @@ public class TranslationClientOfDeepL implements TranslationClient {
             HttpResponse<String> response = client.send(request,
                     HttpResponse.BodyHandlers.ofString());
 
-            // レスポンスボディを出力
-            System.out.println(response.body());
-            return null;
+            if (response.statusCode() == 200) {
+                JsonNode responseBody = mapper.readTree(response.body());
+                String sourceLang = responseBody.get("translations").get(0).get("detected_source_language").asText();
+                String translateResult = responseBody.get("translations").get(0).get("text").asText();
+                if (Debug.debug_mode()){
+                    System.out.printf("sourceLang: %s\r\n", sourceLang);
+                    System.out.printf("result: %s\r\n", translateResult);
+                }
+                return translateResult;
+            } else {
+                return "なんらかのエラーが発生: HTTP STATUS: " + response.statusCode();
+            }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return null;
