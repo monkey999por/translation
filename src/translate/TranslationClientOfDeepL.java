@@ -5,10 +5,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
+import constant.AppConst;
 import monkey999.tools.Setting;
 import org.apache.http.HttpStatus;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -16,12 +18,13 @@ import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class TranslationClientOfDeepL implements TranslationClient {
 
     private static boolean available = true;
     private static ObjectMapper mapper = new ObjectMapper();
-
+    private final LangDetector detector = new LangDetectorOfCybozuLabs();
 
     public TranslationClientOfDeepL() {
         if (Debug.debug_mode()) {
@@ -66,16 +69,28 @@ public class TranslationClientOfDeepL implements TranslationClient {
         if (!TranslationClientOfDeepL.available) {
             return "DeepL翻訳は利用上限に達しています。詳細はhttps://www.deepl.com/ja/account/usageでご確認ください。";
         }
+        String paramText = "";
+        try {
+            paramText = Objects.isNull(text) ? "" : AppConst.codec.encode(text, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            Debug.print(e);
+        }
+
+        Boolean isJapanese = detector.isJapanese(text);
+        var paramSourceLang = isJapanese ? "JA" : "EN";
+        var paramTargetLang = isJapanese ? "EN-US" : "JA";
+
+        var requestBody = String.format("text=%s&source_lang=%s&target_lang=%s", paramText,paramSourceLang,paramTargetLang);
+        Debug.print("requestBody: " + requestBody);
 
         HttpClient client = HttpClient.newHttpClient();
-
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(Setting.getAsString("deepl.uri")))
                 .version(HttpClient.Version.HTTP_2)
                 .header("Authorization", "DeepL-Auth-Key " + Setting.getAsString("deepl.authorization"))
                 .header("User-Agent", "translation/1.2.3")
                 .header("Content-Type", "application/x-www-form-urlencoded")
-                .POST(HttpRequest.BodyPublishers.ofString("text=Hello%2C%20world!this&source_lang=EN&target_lang=JA"))
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
 
         try {

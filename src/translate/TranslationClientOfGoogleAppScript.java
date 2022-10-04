@@ -1,6 +1,7 @@
 package translate;
 
 import app.Debug;
+import constant.AppConst;
 import monkey999.tools.Setting;
 import org.apache.commons.codec.net.URLCodec;
 import monkey999.tools.Cmd;
@@ -12,7 +13,7 @@ import java.util.Objects;
  * see https://script.google.com/home/projects/1sFWfV_MOJbmBeTLT_R9F4Qq0qPolgkRsVt8A_sCMI2C9DTccZBRdHFDt/edit
  */
 public class TranslationClientOfGoogleAppScript implements TranslationClient {
-    private static final URLCodec codec = new URLCodec("UTF-8");
+
 
     private final LangDetector detector = new LangDetectorOfCybozuLabs();
 
@@ -32,7 +33,7 @@ public class TranslationClientOfGoogleAppScript implements TranslationClient {
      */
     public static String createRequestUrl(String text, TargetLang source, TargetLang target) {
         try {
-            text = Objects.isNull(text) ? "" : codec.encode(text, "UTF-8");
+            text = Objects.isNull(text) ? "" : AppConst.codec.encode(text, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             Debug.print(e);
         }
