@@ -4,10 +4,8 @@ import app.Debug;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonObject;
 import constant.AppConst;
 import monkey999.tools.Setting;
-import org.apache.http.HttpStatus;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -15,8 +13,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -52,6 +50,7 @@ public class TranslationClientOfDeepL implements TranslationClient {
                 HashMap<String, Integer> deeplUsage = mapper.readValue(response.body().toString(),  new TypeReference<Map<String, Integer>>() { });
                 if (Debug.debug_mode()){
                     System.out.println("現在の利用文字数: " + deeplUsage.get("character_count"));
+                    System.out.println("残りの翻訳可能文字数: " + (deeplUsage.get("character_limit") - deeplUsage.get("character_count")));
                 }
                 return deeplUsage.get("character_count") > deeplUsage.get("character_limit");
             } else {
@@ -66,9 +65,16 @@ public class TranslationClientOfDeepL implements TranslationClient {
 
     @Override
     public String request(String text) {
+
+        // 文字数上限 1000文字まで
+        if (text == null || text.getBytes(StandardCharsets.UTF_8).length > 3000){
+            return "翻訳できる文字数の上限を超えています。";
+        }
+
         if (!TranslationClientOfDeepL.available) {
             return "DeepL翻訳は利用上限に達しています。詳細はhttps://www.deepl.com/ja/account/usageでご確認ください。";
         }
+
         String paramText = "";
         try {
             paramText = Objects.isNull(text) ? "" : AppConst.codec.encode(text, "UTF-8");
