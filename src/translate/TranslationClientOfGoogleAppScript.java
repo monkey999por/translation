@@ -15,7 +15,7 @@ import java.util.Objects;
 public class TranslationClientOfGoogleAppScript implements TranslationClient {
 
 
-    private final LangDetector detector = new LangDetectorOfCybozuLabs();
+    private final LangDetector detector = LangDetectorFactory.newInstance();
 
     public TranslationClientOfGoogleAppScript() {
         if(Debug.debug_mode()){
