@@ -45,6 +45,14 @@ public class CommandExecutor {
             case "exit":
                 System.exit(0);
                 return true;
+            case "setting":
+                try {
+                    Cmd.execute(true, new String[]{"notepad",Setting.getFilePath()});
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    return true;
+                }
             default:
                 return false;
         }
