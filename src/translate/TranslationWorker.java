@@ -14,7 +14,7 @@ import java.util.concurrent.Future;
 public class TranslationWorker {
 
     // translation tools
-    LangDetector detector = new LangDetectorOfCybozuLabs();
+    LangDetector detector = LangDetectorFactory.newInstance();
 
     // thread control init.
     ExecutorService translator = Executors.newCachedThreadPool();
@@ -30,8 +30,7 @@ public class TranslationWorker {
      */
     public void run(String translationText) {
 
-        TranslationClient client =  Setting.getAsString("translation_client").equals("deepl") ? new TranslationClientOfDeepL() :
-                new TranslationClientOfGoogleAppScript();
+        TranslationClient client = TranslationClientFactory.newInstance();
 
         // request translation
         Future<String> result =

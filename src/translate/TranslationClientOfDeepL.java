@@ -22,7 +22,7 @@ public class TranslationClientOfDeepL implements TranslationClient {
 
     private static boolean available = true;
     private static ObjectMapper mapper = new ObjectMapper();
-    private final LangDetector detector = new LangDetectorOfCybozuLabs();
+    private final LangDetector detector = LangDetectorFactory.newInstance();
 
     public TranslationClientOfDeepL() {
         if (Debug.debug_mode()) {

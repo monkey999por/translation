@@ -1,6 +1,7 @@
 import monkey999.tools.Setting;
 import thread.ClipBoardObserver;
 import thread.StandardInObserver;
+import tools.InnerCommands;
 
 /**
  * see sequence.drawio
@@ -30,6 +31,9 @@ public class Main {
         System.out.println();
         System.out.println("■ Setting: " + Setting.getFilePath());
         System.out.println(Setting.getAllToString());
+        System.out.println();
+        System.out.println("■■■内部コマンド一覧■■■");
+        InnerCommands.getNameAll().forEach(c -> System.out.println("・" + c.getCommand() + " : " + c.getDescription()));
         System.out.println();
         System.out.println("■■■機能■■■");
         System.out.println("  ・クリップボードを監視し、変更があった場合は翻訳します。");
