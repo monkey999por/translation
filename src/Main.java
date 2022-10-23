@@ -1,7 +1,11 @@
 import monkey999.tools.Setting;
 import thread.ClipBoardObserver;
+import thread.ClipBoardObservers;
 import thread.StandardInObserver;
 import tools.InnerCommands;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * see sequence.drawio
@@ -12,13 +16,12 @@ public class Main {
         welcomePrint();
 
         // Monitor the clipboard and call the translator (Translation Worker)
-        // if there is a change and execute it in another thread.
-        new Thread(new ClipBoardObserver()).start();
+        // if there is a chane and execute it in another thread.
+        ClipBoardObservers.getInstance().start(new ClipBoardObserver());
 
         // Monitor the standard in.
         // if there is input and execute process in another thread.
         new Thread(new StandardInObserver()).start();
-
     }
 
     /**
