@@ -1,5 +1,6 @@
 package cmd;
 
+import app.Debug;
 import monkey999.tools.Setting;
 import monkey999.tools.Cmd;
 import tools.InnerCommands;
@@ -31,6 +32,7 @@ public class CommandExecutor {
             }
 
         } catch (Exception e) {
+            Debug.print(e);
             System.out.println("コマンドの実行に失敗しました: " + command);
         }
     }

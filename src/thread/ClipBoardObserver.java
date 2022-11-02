@@ -47,7 +47,11 @@ public class ClipBoardObserver implements Runnable {
                 }
 
 
-            } catch (Exception e) {
+            } catch (InterruptedException ie) {
+                Debug.print("stop clipboard observer");
+                break;
+            }
+            catch (Exception e) {
                 Debug.print(e);
                 continue;
             }
