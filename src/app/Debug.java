@@ -14,7 +14,7 @@ public class Debug {
     }
 
     /**
-     * run with debug debug mode.
+     * run with debug mode.
      * same as {@link Exception#printStackTrace()}
      *
      * @param e

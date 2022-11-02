@@ -17,7 +17,7 @@ public class Main {
 
         // Monitor the clipboard and call the translator (Translation Worker)
         // if there is a chane and execute it in another thread.
-        ClipBoardObservers.getInstance().start(new ClipBoardObserver());
+        ClipBoardObservers.getInstance().start();
 
         // Monitor the standard in.
         // if there is input and execute process in another thread.

@@ -77,7 +77,7 @@ public class InnerCommands {
 
     @InnerCommand(command = "restart", description = "クリップボードの監視を再開します。")
     private static void restart(){
-        ClipBoardObservers.getInstance().start(new ClipBoardObserver());
+        ClipBoardObservers.getInstance().start();
     }
 
     @InnerCommand(command = "stop", description = "クリップボードの監視を停止します。")
