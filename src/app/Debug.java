@@ -15,22 +15,19 @@ public class Debug {
 
     /**
      * run with debug mode.
-     * same as {@link Exception#printStackTrace()}
+     * print to console.
      *
-     * @param e
+     * @param o message
      */
-    public static void print(Exception e) {
-        if (debug_mode()) e.printStackTrace();
-    }
-
-    /**
-     * run with debug mode.
-     * print massage.
-     *
-     * @param s message
-     */
-    public static void print(String s) {
-        if (debug_mode()) System.out.println(s);
+    public static void print(Object o) {
+        if (debug_mode()) {
+            System.out.println("new debug");
+            if (o instanceof Exception) {
+                ((Exception) o).printStackTrace();
+            } else {
+                System.out.println(o);
+            }
+        }
     }
 
     /**
