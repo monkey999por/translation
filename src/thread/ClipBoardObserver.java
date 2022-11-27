@@ -59,6 +59,13 @@ public class ClipBoardObserver implements Runnable {
             // translation worker run
             if (currentClip.isText()) {
                 worker.run((String) currentClip.getAsValue());
+                try {
+                    Thread.sleep(4000L);
+                    lastTimeClip = new ClipBoardItem();
+                    currentClip = new ClipBoardItem();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
             lastTimeClip = currentClip;
 

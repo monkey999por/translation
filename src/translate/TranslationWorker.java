@@ -4,6 +4,9 @@ import app.Debug;
 import monkey999.tools.Setting;
 import tools.MyTextToSpeechClient;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -43,6 +46,14 @@ public class TranslationWorker {
                     System.out.println("---------------------------------------------------------");
                     System.out.println("■ from -> : " + translationText);
                     System.out.println("■ to   -> : " + result.get());
+
+                    // TODO: draft
+                    Toolkit kit = Toolkit.getDefaultToolkit();
+                    Clipboard clip = kit.getSystemClipboard();
+
+                    StringSelection ss = new StringSelection(result.get());
+                    clip.setContents(ss, ss);
+
                     System.out.println();
                 } catch (Exception e) {
                     Debug.print(e);
