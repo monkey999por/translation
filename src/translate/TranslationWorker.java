@@ -47,12 +47,14 @@ public class TranslationWorker {
                     System.out.println("■ from -> : " + translationText);
                     System.out.println("■ to   -> : " + result.get());
 
-                    // TODO: draft
-                    Toolkit kit = Toolkit.getDefaultToolkit();
-                    Clipboard clip = kit.getSystemClipboard();
+                    if (Setting.getAsBoolean("save_result")) {
+                        // TODO: draft
+                        Toolkit kit = Toolkit.getDefaultToolkit();
+                        Clipboard clip = kit.getSystemClipboard();
 
-                    StringSelection ss = new StringSelection(result.get());
-                    clip.setContents(ss, ss);
+                        StringSelection ss = new StringSelection(result.get());
+                        clip.setContents(ss, ss);
+                    }
 
                     System.out.println();
                 } catch (Exception e) {

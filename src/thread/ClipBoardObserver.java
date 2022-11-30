@@ -50,8 +50,7 @@ public class ClipBoardObserver implements Runnable {
             } catch (InterruptedException ie) {
                 Debug.print("stop clipboard observer");
                 break;
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Debug.print(e);
                 continue;
             }
@@ -59,12 +58,15 @@ public class ClipBoardObserver implements Runnable {
             // translation worker run
             if (currentClip.isText()) {
                 worker.run((String) currentClip.getAsValue());
-                try {
-                    Thread.sleep(4000L);
-                    lastTimeClip = new ClipBoardItem();
-                    currentClip = new ClipBoardItem();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                if (Setting.getAsBoolean("save_result")) {
+
+                    try {
+                        Thread.sleep(4000L);
+                        lastTimeClip = new ClipBoardItem();
+                        currentClip = new ClipBoardItem();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
             lastTimeClip = currentClip;
@@ -110,7 +112,7 @@ public class ClipBoardObserver implements Runnable {
          */
         void initUseLevel() {
             Arrays.stream(Setting.getAsString("use_level")
-                    .split(","))
+                            .split(","))
                     .map(i -> i.split(":"))
                     .forEach(x -> useLevels.put(Integer.parseInt(x[0]), Long.parseLong(x[1])));
         }
