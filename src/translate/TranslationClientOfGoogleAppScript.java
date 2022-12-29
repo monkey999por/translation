@@ -3,7 +3,6 @@ package translate;
 import app.Debug;
 import constant.AppConst;
 import monkey999.tools.Setting;
-import org.apache.commons.codec.net.URLCodec;
 import monkey999.tools.Cmd;
 
 import java.io.UnsupportedEncodingException;

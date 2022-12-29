@@ -85,6 +85,13 @@ public class InnerCommands {
         ClipBoardObservers.getInstance().stop();
     }
 
+    @InnerCommand(command = "debug", description = "switch debug mode")
+    private static void debug(){
+        System.out.println("change debug mode: " + Debug.debug_mode());
+        Debug.changeDebugMode(! Debug.debug_mode());
+    }
+
+
 
 }
 

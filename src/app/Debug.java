@@ -6,11 +6,24 @@ public class Debug {
 
     private static final String DEBUG_MODE_KEY = "debug_mode";
 
+    private static class DebugModeCurrent {
+        static boolean current = Setting.getAsBoolean(DEBUG_MODE_KEY);
+    }
+
+    /**
+     * switch debug mode
+     * @param mode
+     */
+    public static void changeDebugMode(boolean mode) {
+        DebugModeCurrent.current = mode;
+    }
+
     /**
      * @return is debug?
      */
     public static boolean debug_mode() {
-        return Setting.getAsBoolean(DEBUG_MODE_KEY);
+            return DebugModeCurrent.current;
+
     }
 
     /**
