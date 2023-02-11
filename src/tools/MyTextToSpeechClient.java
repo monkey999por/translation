@@ -20,6 +20,8 @@ public class MyTextToSpeechClient {
      * Demonstrates using the Text-to-Speech API.
      * see https://cloud.google.com/text-to-speech/docs/libraries#client-libraries-usage-java
      * see https://github.com/googleapis/java-texttospeech/blob/HEAD/samples/snippets/src/main/java/com/example/texttospeech/QuickstartSample.java
+     *
+     * TODO ※google cloudでサービスアカウント無効中。
      */
     public static void request(String text) throws Exception {
         if (!Setting.getAsBoolean("enable_google_cloud_text_to_speech")) {

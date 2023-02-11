@@ -67,8 +67,6 @@ public class TranslationClientOfGoogleAppScript implements TranslationClient {
         String requestUrl = detector.isJapanese(text)
                 ? createRequestUrl(text, TargetLang.JAPANESE, TargetLang.ENGLISH)
                 : createRequestUrl(text, TargetLang.ENGLISH, TargetLang.JAPANESE);
-
         return translate(requestUrl);
     }
-
 }
