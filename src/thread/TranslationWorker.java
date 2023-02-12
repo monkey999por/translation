@@ -1,8 +1,12 @@
-package translate;
+package thread;
 
-import app.Debug;
+import api.client.TranslationClient;
+import api.client.TranslationClientFactory;
 import monkey999.tools.Setting;
+import tools.Debug;
 import tools.MyTextToSpeechClient;
+import tools.language.detector.LangDetector;
+import tools.language.detector.LangDetectorFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

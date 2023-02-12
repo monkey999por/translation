@@ -1,11 +1,7 @@
 import monkey999.tools.Setting;
-import thread.ClipBoardObserver;
 import thread.ClipBoardObservers;
 import thread.StandardInObserver;
-import tools.InnerCommands;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import tools.cmd.InnerCommands;
 
 /**
  * see sequence.drawio
@@ -22,6 +18,7 @@ public class Main {
         // Monitor the standard in.
         // if there is input and execute process in another thread.
         new Thread(new StandardInObserver()).start();
+
     }
 
     /**

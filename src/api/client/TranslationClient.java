@@ -1,4 +1,6 @@
-package translate;
+package api.client;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface TranslationClient {
     /**
@@ -9,5 +11,5 @@ public interface TranslationClient {
      * @param text translate text.
      * @return translate result. nomal text
      */
-    String request(String text);
+    String request(String text) throws JsonProcessingException;
 }

@@ -1,10 +1,9 @@
 package thread;
 
-import app.Debug;
+import tools.Debug;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public abstract class Observers {
 
@@ -15,9 +14,9 @@ public abstract class Observers {
     /**
      * thread stop
      */
-    public void stop(){
+    public void stop() {
         if (executor != null) {
-            while (! executor.isShutdown()) {
+            while (!executor.isShutdown()) {
                 Debug.print("is shutdown" + executor.isShutdown());
                 executor.shutdownNow();
                 try {
@@ -28,10 +27,13 @@ public abstract class Observers {
             }
             executor = null;
         }
-    };
+    }
+
+    ;
 
     /**
      * thread start
+     *
      * @return
      */
     public void start() {

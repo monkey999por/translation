@@ -1,9 +1,8 @@
 package thread;
 
-import app.Debug;
 import monkey999.tools.Setting;
-import cmd.CommandExecutor;
-import translate.TranslationWorker;
+import tools.Debug;
+import tools.cmd.CommandExecutor;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;

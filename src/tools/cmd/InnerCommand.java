@@ -1,4 +1,4 @@
-package tools;
+package tools.cmd;
 
 import java.lang.annotation.*;
 
@@ -7,5 +7,6 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 public @interface InnerCommand {
     String command();
+
     String description();
 }

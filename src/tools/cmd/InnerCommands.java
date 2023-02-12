@@ -1,10 +1,9 @@
-package tools;
+package tools.cmd;
 
-import app.Debug;
 import monkey999.tools.Cmd;
 import monkey999.tools.Setting;
-import thread.ClipBoardObserver;
 import thread.ClipBoardObservers;
+import tools.Debug;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -76,12 +75,12 @@ public class InnerCommands {
     }
 
     @InnerCommand(command = "restart", description = "クリップボードの監視を再開します。")
-    private static void restart(){
+    private static void restart() {
         ClipBoardObservers.getInstance().start();
     }
 
     @InnerCommand(command = "stop", description = "クリップボードの監視を停止します。")
-    private static void stop(){
+    private static void stop() {
         ClipBoardObservers.getInstance().stop();
     }
 

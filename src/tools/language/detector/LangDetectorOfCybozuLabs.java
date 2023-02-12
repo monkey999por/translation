@@ -1,10 +1,11 @@
-package translate;
+package tools.language.detector;
 
-import app.Debug;
-import monkey999.tools.Setting;
 import com.cybozu.labs.langdetect.Detector;
 import com.cybozu.labs.langdetect.DetectorFactory;
 import com.cybozu.labs.langdetect.LangDetectException;
+import constant.TargetLang;
+import monkey999.tools.Setting;
+import tools.Debug;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;

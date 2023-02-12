@@ -1,11 +1,8 @@
-package cmd;
+package tools.cmd;
 
-import app.Debug;
-import monkey999.tools.Setting;
 import monkey999.tools.Cmd;
-import tools.InnerCommands;
-
-import java.lang.reflect.InvocationTargetException;
+import monkey999.tools.Setting;
+import tools.Debug;
 
 /**
  * any command execute by this.

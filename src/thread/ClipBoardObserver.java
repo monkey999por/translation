@@ -1,9 +1,8 @@
 package thread;
 
-import app.Debug;
 import monkey999.tools.Setting;
 import tools.ClipBoardItem;
-import translate.TranslationWorker;
+import tools.Debug;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -50,8 +49,7 @@ public class ClipBoardObserver implements Runnable {
             } catch (InterruptedException ie) {
                 Debug.print("stop clipboard observer");
                 break;
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Debug.print(e);
                 continue;
             }
@@ -103,7 +101,7 @@ public class ClipBoardObserver implements Runnable {
          */
         void initUseLevel() {
             Arrays.stream(Setting.getAsString("use_level")
-                    .split(","))
+                            .split(","))
                     .map(i -> i.split(":"))
                     .forEach(x -> useLevels.put(Integer.parseInt(x[0]), Long.parseLong(x[1])));
         }

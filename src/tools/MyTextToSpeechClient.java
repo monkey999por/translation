@@ -1,10 +1,10 @@
 package tools;
 
-import monkey999.tools.Setting;
 import com.google.cloud.texttospeech.v1.*;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.FactoryRegistry;
 import javazoom.jl.player.advanced.AdvancedPlayer;
+import monkey999.tools.Setting;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,7 +20,7 @@ public class MyTextToSpeechClient {
      * Demonstrates using the Text-to-Speech API.
      * see https://cloud.google.com/text-to-speech/docs/libraries#client-libraries-usage-java
      * see https://github.com/googleapis/java-texttospeech/blob/HEAD/samples/snippets/src/main/java/com/example/texttospeech/QuickstartSample.java
-     *
+     * <p>
      * TODO ※google cloudでサービスアカウント無効中。
      */
     public static void request(String text) throws Exception {
@@ -51,7 +51,7 @@ public class MyTextToSpeechClient {
             var audioContents = response.getAudioContent();
 
             // Write the response to the output file.
-            try (var out = new FileOutputStream(Paths.get(Setting.getAsString("google_cloud_text_to_speech_out_audio_file")) .toFile().getAbsolutePath())) {
+            try (var out = new FileOutputStream(Paths.get(Setting.getAsString("google_cloud_text_to_speech_out_audio_file")).toFile().getAbsolutePath())) {
                 out.write(audioContents.toByteArray());
             }
         }
@@ -67,7 +67,7 @@ public class MyTextToSpeechClient {
      */
     public static void playback() throws JavaLayerException, FileNotFoundException {
         var audioFile = new FileInputStream(
-                Paths.get(Setting.getAsString("google_cloud_text_to_speech_out_audio_file")) .toFile().getAbsolutePath());
+                Paths.get(Setting.getAsString("google_cloud_text_to_speech_out_audio_file")).toFile().getAbsolutePath());
         var audioDevice = FactoryRegistry.systemRegistry().createAudioDevice();
         var player = new AdvancedPlayer(audioFile, audioDevice);
         player.play();

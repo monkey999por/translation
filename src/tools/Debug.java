@@ -1,4 +1,4 @@
-package app;
+package tools;
 
 import monkey999.tools.Setting;
 
@@ -21,7 +21,6 @@ public class Debug {
      */
     public static void print(Object o) {
         if (debug_mode()) {
-            System.out.println("new debug");
             if (o instanceof Exception) {
                 ((Exception) o).printStackTrace();
             } else {

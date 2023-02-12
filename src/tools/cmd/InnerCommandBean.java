@@ -1,4 +1,4 @@
-package tools;
+package tools.cmd;
 
 public class InnerCommandBean {
 
@@ -13,7 +13,7 @@ public class InnerCommandBean {
         return description;
     }
 
-    public InnerCommandBean(String command, String description){
+    public InnerCommandBean(String command, String description) {
         this.command = command;
         this.description = description;
     }

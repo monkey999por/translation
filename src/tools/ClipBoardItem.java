@@ -1,7 +1,5 @@
 package tools;
 
-import app.Debug;
-
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -29,8 +27,8 @@ public class ClipBoardItem {
             Clipboard clip = kit.getSystemClipboard();
 
             DataFlavor availableFlavor = Arrays.asList(
-                    DataFlavor.stringFlavor,
-                    DataFlavor.imageFlavor).stream()
+                            DataFlavor.stringFlavor,
+                            DataFlavor.imageFlavor).stream()
                     .filter(f -> clip.isDataFlavorAvailable(f))
                     .findFirst()
                     .get();
@@ -105,7 +103,7 @@ public class ClipBoardItem {
             isSameValue = me.equals(param);
         }
         // todo -> equal image ??
-        if(this.isImage() || target.isImage()) return true;
+        if (this.isImage() || target.isImage()) return true;
 
         return isSameValue;
     }

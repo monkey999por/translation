@@ -1,4 +1,4 @@
-package translate;
+package constant;
 
 /**
  * target of translation language code.

@@ -1,6 +1,7 @@
-package translate;
+package tools.language.detector;
 
 import com.cybozu.labs.langdetect.Detector;
+import constant.TargetLang;
 
 import java.util.ArrayList;
 
