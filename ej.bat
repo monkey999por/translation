@@ -10,7 +10,14 @@ if "%1"=="-setting" (
 	exit /b 0
 )
 
+if "%1"=="" goto LATEST
+if "%1"=="-v2" goto :VERSION2
+
+:LATEST
 start "translation" /WAIT /B java -Dfile.encoding="utf-8" -jar .\target\translation-0.0.1-SNAPSHOT-jar-with-dependencies.jar .\setting.properties
+
+:VERSION2
+start "translation" /WAIT /B java -Dfile.encoding="utf-8" -jar C:\tools\translation\translation-0.0.1-SNAPSHOT_v2.jar C:\tools\translation\setting.properties
 
 ::echo "Restart..."
 ::timeout /T 2
