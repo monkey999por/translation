@@ -6,7 +6,7 @@
 :RESTART
 
 if "%1"=="-setting" (
-	start "" sakura.exe .\setting\setting.properties
+	start "" sakura.exe "C:\tools\translation\setting.properties"
 	exit /b 0
 )
 
@@ -18,7 +18,7 @@ start "translation" /WAIT /B java -Dfile.encoding="utf-8" -jar .\target\translat
 goto END
 
 :VERSION2
-start "translation" /WAIT /B java -Dfile.encoding="utf-8" -jar C:\tools\translation\translation-0.0.1-SNAPSHOT_v2.jar C:\tools\translation\setting.properties
+start "translation" /WAIT /B java -Dfile.encoding="utf-8" -jar C:\tools\translation\translation-0.0.1-SNAPSHOT.jar "C:\tools\translation\setting.properties"
 pause
 GOTO END
 
